@@ -9,6 +9,7 @@ import {
   MenuItem,
   Select,
   Stack,
+  SliderValueLabel,
 } from '@material-ui/core'
 import Item, { ZH } from './Item'
 import { FC, useState } from 'react'
@@ -28,39 +29,43 @@ const useStyles = makeStyles((theme) => ({
 
 export interface Filters {
   name: string
+  type: string
 }
 
 export interface SearchProps {
+  filters?: Record<string, []>;
   results?: Array<Feature<Geometry, ZH>>
   onFilter?(filters: Filters): void
 }
 
-const initFilters = {
+const initFilter = {
   name: '',
+  type: '',
 }
 
-const Search: FC<SearchProps> = ({ results = [], onFilter }) => {
-  const classes = useStyles()
-  const [filter, setFilters] = useState<Filters>(initFilters)
-  const types = [
-    ...new Set(results.map((result) => result.properties.type)),
-  ].sort()
+const initFilters = {
+  types: []
+}
 
-  const handleOnNameChange = (e) => {
-    const newFilters = {
+const Search: FC<SearchProps> = ({ results = [], filters = initFilters, onFilter }) => {
+  const classes = useStyles()
+  const [filter, setFilter] = useState<Filters>(initFilter)
+
+  const handleFilters = (e, property) => {
+    const newFilter = {
       ...filter,
-      name: e.target.value,
+      [property]: e.target.value,
     }
 
-    setFilters(newFilters)
-    onFilter(newFilters)
+    setFilter(newFilter)
+    onFilter(newFilter)
   }
 
   return (
     <Stack sx={{ width: 500, height: '100%' }}>
       <TextField
         value={filter.name}
-        onChange={handleOnNameChange}
+        onChange={(e) => handleFilters(e, 'name')}
         label="Chercher une ZH"
         fullWidth
       />
@@ -79,9 +84,16 @@ const Search: FC<SearchProps> = ({ results = [], onFilter }) => {
         </FormControl>
         <FormControl fullWidth>
           <InputLabel>Type de zone</InputLabel>
-          <Select className={classes.select}>
-            {types.map((type) => (
-              <MenuItem key={type}>{type}</MenuItem>
+          <Select
+            className={classes.select}
+            value={filter.type}
+            onChange={(e) => handleFilters(e, 'type')}
+          >
+            <MenuItem value="All">Tous</MenuItem>
+            {filters.types.map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
