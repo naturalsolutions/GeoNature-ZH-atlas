@@ -1,19 +1,20 @@
 import { NextPage } from 'next'
+import { useRouter } from 'next/dist/client/router'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
+import Form from '../components/Form'
 import LayoutMap from '../components/Layout/Map'
-import { FeatureCollection } from 'geojson'
 import Search from '../components/Search'
-import { ZH } from '../components/Search/Item'
 const isProd = process.env.NODE_ENV === 'production'
 
 const Map = dynamic(() => import('../components/Map'), { ssr: false })
 
 const MapPage: NextPage = () => {
+  const router = useRouter()
   const [geojson, setGeojson] = useState()
   const [results, setResults] = useState([])
   const [filters, setFilters] = useState({
-    types: []
+    types: [],
   })
 
   const fetchGeojson = async () => {
@@ -28,13 +29,16 @@ const MapPage: NextPage = () => {
       // @ts-ignore
       setResults(newGeojson.features)
 
-      const types = [ // @ts-ignore
-        ...new Set(newGeojson.features.map((feature) => feature.properties.type)),
+      const types = [
+
+        ...new Set(// @ts-ignore
+          newGeojson.features.map((feature) => feature.properties.type)
+        ),
       ].sort()
 
       setFilters({
         ...filters,
-        types
+        types,
       })
     } catch (e) {
     } finally {
@@ -46,9 +50,11 @@ const MapPage: NextPage = () => {
     // @ts-ignore
     if (Array.isArray(geojson?.features)) {
       // @ts-ignore
-      const newResults = geojson.features.filter((r) =>
-        r.properties.nom.includes(filters.name)
-      ).filter((r) => filters.type === "All" || r.properties.type === filters.type)
+      const newResults = geojson.features
+        .filter((r) => r.properties.nom.includes(filters.name))
+        .filter(
+          (r) => filters.type === 'All' || r.properties.type === filters.type
+        )
 
       setResults(newResults)
     }
@@ -61,8 +67,10 @@ const MapPage: NextPage = () => {
   return (
     <LayoutMap>
       {
-        // @ts-ignore
-        <Search results={results} filters={filters} onFilter={handleFilters} />
+        router.query.id
+          ? <Form />
+          : // @ts-ignore
+          <Search results={results} filters={filters} onFilter={handleFilters} />
       }
       <Map geojson={geojson} />
     </LayoutMap>

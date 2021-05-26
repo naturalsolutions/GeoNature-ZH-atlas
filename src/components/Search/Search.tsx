@@ -33,7 +33,7 @@ export interface Filters {
 }
 
 export interface SearchProps {
-  filters?: Record<string, []>;
+  filters?: Record<string, []>
   results?: Array<Feature<Geometry, ZH>>
   onFilter?(filters: Filters): void
 }
@@ -44,10 +44,14 @@ const initFilter = {
 }
 
 const initFilters = {
-  types: []
+  types: [],
 }
 
-const Search: FC<SearchProps> = ({ results = [], filters = initFilters, onFilter }) => {
+const Search: FC<SearchProps> = ({
+  results = [],
+  filters = initFilters,
+  onFilter,
+}) => {
   const classes = useStyles()
   const [filter, setFilter] = useState<Filters>(initFilter)
 
@@ -62,7 +66,7 @@ const Search: FC<SearchProps> = ({ results = [], filters = initFilters, onFilter
   }
 
   return (
-    <Stack sx={{ width: 500, height: '100%' }}>
+    <Stack sx={{ width: 500, height: '100%', overflow: 'auto' }}>
       <TextField
         value={filter.name}
         onChange={(e) => handleFilters(e, 'name')}
