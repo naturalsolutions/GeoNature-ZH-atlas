@@ -5,6 +5,7 @@ import LayoutMap from '../components/Layout/Map'
 import { FeatureCollection } from 'geojson'
 import Search from '../components/Search'
 import { ZH } from '../components/Search/Item'
+const isProd = process.env.NODE_ENV === 'production'
 
 const Map = dynamic(() => import('../components/Map'), { ssr: false })
 
@@ -15,7 +16,7 @@ const MapPage: NextPage = () => {
     let newGeojson = {}
 
     try {
-      const data = await fetch('/geonature.geojson')
+      const data = await fetch(`${isProd ? '/geonature-atlas' : ''}/geonature.geojson`)
 
       newGeojson = await data.json()
     } catch (e) {

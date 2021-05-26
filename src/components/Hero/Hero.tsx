@@ -1,11 +1,13 @@
 import { FC } from 'react'
 import { makeStyles, Typography, Box, Button, Stack } from '@material-ui/core'
 
+const isProd = process.env.NODE_ENV === 'production'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: 800,
-    backgroundImage: 'url(/images/hero.png)',
+    backgroundImage: `url(${isProd ? '/geonature-atlas' : ''}/images/hero.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -46,7 +48,7 @@ const Hero: FC = () => {
           className={classes.button}
           variant="contained"
           size="large"
-          href="/map"
+          href={`${isProd ? '/geonature-atlas' : ''}/map`}
         >
           Accéder à l'atlas
         </Button>
