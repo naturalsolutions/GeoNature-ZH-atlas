@@ -30,7 +30,7 @@ const Form: FC = () => {
 
 
   const handleOnBack = () => {
-    router.push('/map')
+    router.push(`${isProd ? '/geonature-atlas' : ''}/map`)
   }
 
   return <Paper elevation={0} sx={{ height: '100vh', width: 500, px: 2 }}>
