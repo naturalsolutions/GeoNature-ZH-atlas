@@ -2,14 +2,15 @@ image: node
 
 cache:
   paths:
-    - node_modules/
+    - node_modules
 
 pages:
   before_script:
     - npm install
   script:
     - npm run publish
-    - mv out/* public
+    - rm -rf public
+    - mv out public
   after_script:
     - rm -rf out
   artifacts:
