@@ -35,6 +35,7 @@ const Map: FC<MapProps> = ({ geojson }) => {
           />
         </LayersControl.BaseLayer>
       </LayersControl>
+      <GeoJSON data={geojson} />
     </MapContainer>
   )
 }
