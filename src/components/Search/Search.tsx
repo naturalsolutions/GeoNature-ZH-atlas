@@ -11,7 +11,7 @@ import {
   Stack,
 } from '@material-ui/core'
 import Item, { ZH } from './Item'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Feature, Geometry } from 'geojson'
 
 const useStyles = makeStyles((theme) => ({
@@ -26,19 +26,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export interface SearchProps {
-  results?: Array<Feature<Geometry, ZH>>
+export interface Filters {
+  name: string
 }
 
-const Search: FC<SearchProps> = ({ results = [] }) => {
+export interface SearchProps {
+  results?: Array<Feature<Geometry, ZH>>
+  onFilter?(filters: Filters): void
+}
+
+const initFilters = {
+  name: '',
+}
+
+const Search: FC<SearchProps> = ({ results = [], onFilter }) => {
   const classes = useStyles()
+  const [filter, setFilters] = useState<Filters>(initFilters)
   const types = [
     ...new Set(results.map((result) => result.properties.type)),
   ].sort()
 
+  const handleOnNameChange = (e) => {
+    const newFilters = {
+      ...filter,
+      name: e.target.value,
+    }
+
+    setFilters(newFilters)
+    onFilter(newFilters)
+  }
+
   return (
     <Stack sx={{ width: 500, height: '100%' }}>
-      <TextField label="Chercher une ZH" fullWidth />
+      <TextField
+        value={filter.name}
+        onChange={handleOnNameChange}
+        label="Chercher une ZH"
+        fullWidth
+      />
       <Stack direction="row" sx={{ p: '2px' }}>
         <FormControl fullWidth>
           <InputLabel>Bassin versant</InputLabel>
@@ -56,7 +81,7 @@ const Search: FC<SearchProps> = ({ results = [] }) => {
           <InputLabel>Type de zone</InputLabel>
           <Select className={classes.select}>
             {types.map((type) => (
-              <MenuItem>{type}</MenuItem>
+              <MenuItem key={type}>{type}</MenuItem>
             ))}
           </Select>
         </FormControl>

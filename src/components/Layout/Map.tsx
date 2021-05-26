@@ -12,7 +12,7 @@ const LayoutMap: FC = ({ children }) => {
   return (
     <Stack sx={{ height: '100vh' }}>
       <NavBar />
-      <Stack direction="row" component="main">
+      <Stack direction="row" component="main" sx={{ height: '100%' }}>
         {children}
       </Stack>
     </Stack>

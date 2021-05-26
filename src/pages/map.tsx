@@ -11,17 +11,34 @@ const Map = dynamic(() => import('../components/Map'), { ssr: false })
 
 const MapPage: NextPage = () => {
   const [geojson, setGeojson] = useState()
+  const [results, setResults] = useState([])
 
   const fetchGeojson = async () => {
     let newGeojson = {}
 
     try {
-      const data = await fetch(`${isProd ? '/geonature-atlas' : ''}/geonature.geojson`)
+      const data = await fetch(
+        `${isProd ? '/geonature-atlas' : ''}/geonature.geojson`
+      )
 
       newGeojson = await data.json()
+      // @ts-ignore
+      setResults(newGeojson.features)
     } catch (e) {
     } finally {
       return newGeojson
+    }
+  }
+
+  const handleFilters = (filters) => {
+    // @ts-ignore
+    if (Array.isArray(geojson?.features)) {
+      // @ts-ignore
+      const newResults = geojson.features.filter((r) =>
+        r.properties.nom.includes(filters.name)
+      )
+
+      setResults(newResults)
     }
   }
 
@@ -31,10 +48,7 @@ const MapPage: NextPage = () => {
 
   return (
     <LayoutMap>
-      {
-        // @ts-ignore
-        <Search results={geojson?.features} />
-      }
+      <Search results={results} onFilter={handleFilters} />
       <Map geojson={geojson} />
     </LayoutMap>
   )
