@@ -1,67 +1,86 @@
-import { Grid, Stack, Typography, Paper, ButtonBase } from '@material-ui/core'
+import {
+  Chip,
+  Stack,
+  Typography,
+  Paper,
+  Box,
+  makeStyles,
+} from '@material-ui/core'
 import { useRouter } from 'next/dist/client/router'
 import { FC } from 'react'
-
-export interface ZH {
-  nom: string
-  type: string
-  communes: string[]
-  code: string
-}
+import { ZoneHumide } from '../..'
+import { TYPES_COLORS } from '../../constants'
 
 export interface ItemProps {
-  value: ZH
+  value: ZoneHumide
 }
 
 const isProd = process.env.NODE_ENV === 'production'
 
+const useStyles = makeStyles({
+  root: {
+    overflow: 'hidden',
+    cursor: 'pointer',
+  },
+  image: {
+    width: 100,
+  },
+  box: {
+    borderRadius: '50%',
+  },
+  content: {
+    padding: '4px 5px ',
+  },
+})
+
 const Item: FC<ItemProps> = ({ value }) => {
   const router = useRouter()
+  const classes = useStyles()
 
   const handleShowForm = () => {
     router.push(`${isProd ? '/geonature-atlas' : ''}/map?id=${value.code}`)
   }
 
   return (
-    <Paper sx={{ p: 1, mb: 1 }} onClick={handleShowForm}>
-      <Grid container spacing={2}>
-        <Grid item>
-          <img
-            src={`${isProd ? '/geonature-atlas' : ''}/images/mini.png`}
-            style={{ height: '100%' }}
+    <Paper className={classes.root} onClick={handleShowForm}>
+      <Stack direction="row" spacing={2}>
+        <img
+          src={`${
+            isProd ? '/geonature-atlas' : ''
+          }/images/thumbnail_not_found.svg`}
+          className={classes.image}
+        />
+        <Stack className={classes.content} spacing={1}>
+          <Typography
+            variant="body2"
+            color="textPrimary"
+            style={{ fontWeight: 'bold' }}
+          >
+            {value.nom.toUpperCase()}
+          </Typography>
+          {value.bassin_versant && (
+            <Stack direction="row" spacing={1}>
+              {value.bassin_versant.map((bassin_versant) => (
+                <Chip
+                  key={bassin_versant}
+                  label={bassin_versant}
+                  size="small"
+                />
+              ))}
+            </Stack>
+          )}
+          <Chip
+            avatar={
+              <Box
+                className={classes.box}
+                style={{ backgroundColor: TYPES_COLORS[value.type_code] }}
+              />
+            }
+            label={value.type}
+            size="small"
           />
-        </Grid>
-        <Grid item xs>
-          <Stack style={{ width: '100%' }}>
-            <Typography
-              variant="caption"
-              color="textPrimary"
-              style={{ fontWeight: 'bold' }}
-            >
-              {value.nom}
-            </Typography>
-            <Typography variant="caption" color="primary">
-              BD de la zone
-              </Typography>
-            <Grid container sx={{ p: 0, m: 0 }}>
-              <Grid item xs={6}>
-                <Typography variant="caption" color="primary">
-                  Commune de la zone
-                  </Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography
-                  variant="caption"
-                  justifyContent="flex-end"
-                  color="primary"
-                >
-                  {value.type}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Stack>
-        </Grid>
-      </Grid>
+        </Stack>
+      </Stack>
     </Paper>
   )
 }

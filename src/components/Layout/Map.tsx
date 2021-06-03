@@ -1,21 +1,54 @@
-import { Drawer, Box, Toolbar, Stack } from '@material-ui/core'
-import { FC, useState } from 'react'
+import { FC } from 'react'
+import { Stack, makeStyles } from '@material-ui/core'
 import NavBar from '../NavBar'
-import Toggle from '../Toggle'
 
-const LayoutMap: FC = ({ children }) => {
-  const [open, setOpen] = useState<boolean>(false)
-  const handleToggle = (toggle: boolean) => {
-    setOpen(toggle)
-  }
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  container: {
+    display: 'flex',
+    height: '100%',
+    width: '100%',
+    flexDirection: 'row',
+    paddingTop: 56,
+  },
+  aside: {
+    width: '100%',
+    height: '100%',
+    overflow: 'hidden',
+  },
+  main: {
+    flex: 1,
+    height: '100%',
+  },
+  [theme.breakpoints.up('sm')]: {
+    container: {
+      paddingTop: 62,
+    },
+    aside: {
+      width: 500,
+    },
+  },
+}))
+
+export interface LayoutMapProps {
+  sidebar?: JSX.Element
+}
+
+const LayoutMap: FC<LayoutMapProps> = ({ sidebar, children }) => {
+  const classes = useStyles()
 
   return (
-    <Stack sx={{ height: 'calc(100vh - 60px)' }}>
+    <div className={classes.root}>
       <NavBar />
-      <Stack direction="row" component="main" sx={{ height: '100%' }}>
-        {children}
-      </Stack>
-    </Stack>
+      <div className={classes.container}>
+        <aside className={classes.aside}>{sidebar}</aside>
+        <main className={classes.main}>{children}</main>
+      </div>
+    </div>
   )
 }
 

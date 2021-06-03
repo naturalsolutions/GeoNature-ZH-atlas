@@ -6,7 +6,7 @@ const isProd = process.env.NODE_ENV === 'production'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height: 800,
+    height: 400,
     backgroundImage: `url(${isProd ? '/geonature-atlas' : ''}/images/hero.png)`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   box: {
     width: 450,
     textAlign: 'center',
+    marginTop: '2rem',
   },
   text: {
     fontSize: '50px',
@@ -28,6 +29,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.background.default,
     width: 300,
     padding: '1rem 3rem',
+  },
+  [theme.breakpoints.up('sm')]: {
+    root: {
+      height: 800,
+    },
   },
 }))
 

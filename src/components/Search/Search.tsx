@@ -1,59 +1,58 @@
 import {
-  Box,
   FormControl,
   InputLabel,
-  List,
   TextField,
-  ListItem,
   makeStyles,
   MenuItem,
   Select,
   Stack,
-  SliderValueLabel,
+  Paper,
+  Typography,
 } from '@material-ui/core'
-import Item, { ZH } from './Item'
-import { FC, useState } from 'react'
-import { Feature, Geometry } from 'geojson'
+import Item from './Item'
+import { FC, useState, useContext, useEffect } from 'react'
+import { AppContext } from '../AppContext'
+import { ZoneHumide } from '../..'
 
 const useStyles = makeStyles((theme) => ({
-  select: {
-    borderRadius: 0,
-    borderColor: theme.palette.primary.main,
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    '& *': {
-      textTrasnform: 'uppercase',
-    },
+  root: {
+    width: '100%',
+    height: '100%',
+    padding: '1rem .5rem',
   },
 }))
 
 export interface Filters {
   name: string
   type: string
+  bassin_versant: string
+  communes: string
 }
 
-export interface SearchProps {
-  filters?: Record<string, []>
-  results?: Array<Feature<Geometry, ZH>>
-  onFilter?(filters: Filters): void
+export interface Values {
+  type: string[]
+  bassin_versant: string[]
+  communes: string[]
 }
 
 const initFilter = {
-  name: '',
+  nom: '',
   type: '',
+  bassin_versant: '',
+  communes: '',
 }
 
-const initFilters = {
-  types: [],
+const initValues = {
+  type: [],
+  bassin_versant: [],
+  communes: [],
 }
 
-const Search: FC<SearchProps> = ({
-  results = [],
-  filters = initFilters,
-  onFilter,
-}) => {
+const Search: FC = () => {
   const classes = useStyles()
-  const [filter, setFilter] = useState<Filters>(initFilter)
+  const { results, geoJSON, filter, setFilter, setResults } =
+    useContext(AppContext)
+  const [values, setValues] = useState<Values>(initValues)
 
   const handleFilters = (e, property) => {
     const newFilter = {
@@ -62,52 +61,128 @@ const Search: FC<SearchProps> = ({
     }
 
     setFilter(newFilter)
-    onFilter(newFilter)
   }
 
+  useEffect(() => {
+    const newValues = initValues
+
+    for (const type of Object.keys(initValues)) {
+      newValues[type] = [
+        ...new Set(
+          geoJSON.features
+            .map((f) => f.properties[type])
+            .flat()
+            .sort()
+        ),
+      ]
+    }
+
+    setValues(newValues)
+  }, [geoJSON])
+
+  useEffect(() => {
+    let newResults = { ...geoJSON }
+
+    if (filter.nom) {
+      newResults.features = newResults.features.filter((f) => {
+        return f.properties.nom.includes(filter.nom)
+      })
+    }
+
+    if (filter.bassin_versant && filter.bassin_versant !== 'all') {
+      newResults.features = newResults.features.filter((f) => {
+        return f.properties.bassin_versant.includes(filter.bassin_versant)
+      })
+    }
+
+    if (filter.communes && filter.communes !== 'all') {
+      newResults.features = newResults.features.filter((f) => {
+        return f.properties.communes.includes(filter.communes)
+      })
+    }
+
+    if (filter.type && filter.type !== 'all') {
+      newResults.features = newResults.features.filter((f) => {
+        return f.properties.type === filter.type
+      })
+    }
+
+    setResults(newResults)
+  }, [filter])
+
   return (
-    <Stack sx={{ width: 500, height: '100%', overflow: 'auto' }}>
-      <TextField
-        value={filter.name}
-        onChange={(e) => handleFilters(e, 'name')}
-        label="Chercher une ZH"
-        fullWidth
-      />
-      <Stack direction="row" sx={{ p: '2px' }}>
-        <FormControl fullWidth>
-          <InputLabel>Bassin versant</InputLabel>
-          <Select className={classes.select}>
-            <MenuItem></MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel>Commune</InputLabel>
-          <Select className={classes.select}>
-            <MenuItem></MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel>Type de zone</InputLabel>
-          <Select
-            className={classes.select}
-            value={filter.type}
-            onChange={(e) => handleFilters(e, 'type')}
-          >
-            <MenuItem value="All">Tous</MenuItem>
-            {filters.types.map((type) => (
-              <MenuItem key={type} value={type}>
-                {type}
+    <Paper className={classes.root}>
+      <Stack
+        sx={{ width: '100%', height: '100%', overflow: 'auto' }}
+        spacing={1}
+      >
+        <TextField
+          value={filter.nom}
+          onChange={(e) => handleFilters(e, 'nom')}
+          label="Chercher une ZH"
+          fullWidth
+        />
+        <Stack direction="row" spacing={1}>
+          <FormControl fullWidth>
+            <InputLabel>Bassin versant</InputLabel>
+            <Select
+              value={filter.bassin_versant}
+              onChange={(e) => handleFilters(e, 'bassin_versant')}
+            >
+              <MenuItem disabled value="all">
+                Bassin versant
               </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+              <MenuItem value="all">Tous</MenuItem>
+              {values.bassin_versant.map((bassin_versant) => (
+                <MenuItem key={bassin_versant} value={bassin_versant}>
+                  {bassin_versant}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel>Commune</InputLabel>
+            <Select
+              value={filter.communes}
+              onChange={(e) => handleFilters(e, 'communes')}
+            >
+              <MenuItem disabled value="all">
+                Commune
+              </MenuItem>
+              <MenuItem value="all">Toutes</MenuItem>
+              {values.communes.map((communes) => (
+                <MenuItem key={communes} value={communes}>
+                  {communes}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel>Type de zone</InputLabel>
+            <Select
+              value={filter.type}
+              onChange={(e) => handleFilters(e, 'type')}
+            >
+              <MenuItem disabled value="all">
+                Type de zone
+              </MenuItem>
+              <MenuItem value="all">Tous</MenuItem>
+              {values.type.map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Stack>
+        <Stack sx={{ p: '2px' }} spacing={2}>
+          <Typography>{results.features.length} zones humides</Typography>
+          {results.features.map((result) => (
+            <Item key={result.id} value={result.properties as ZoneHumide} />
+          ))}
+        </Stack>
       </Stack>
-      <Stack sx={{ p: '2px' }}>
-        {results.map((result) => (
-          <Item key={result.id} value={result.properties} />
-        ))}
-      </Stack>
-    </Stack>
+    </Paper>
   )
 }
 
