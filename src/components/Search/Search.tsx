@@ -14,6 +14,9 @@ import Item from './Item'
 import { FC, useState, useContext, useEffect } from 'react'
 import { AppContext } from '../AppContext'
 import { ZoneHumide } from '../..'
+import { TYPES, TYPES_COLORS } from '../../constants'
+
+const types = Object.values(TYPES)
 
 const useStyles = makeStyles<Theme>((theme) => ({
   root: {
@@ -169,7 +172,24 @@ const Search: FC = () => {
               <MenuItem value="all">Tous</MenuItem>
               {values.type.map((type) => (
                 <MenuItem key={type} value={type}>
-                  {type}
+                  <Stack spacing={1} direction="row">
+                    <Box
+                      sx={{
+                        width: 20,
+                        height: 20,
+                        borderRadius: 50,
+                        backgroundColor:
+                          TYPES_COLORS[
+                            types.findIndex(
+                              (v) =>
+                                v.trim().toLowerCase() ===
+                                type.trim().toLowerCase()
+                            ) + 1
+                          ],
+                      }}
+                    />
+                    <Typography>{type}</Typography>
+                  </Stack>
                 </MenuItem>
               ))}
             </Select>
