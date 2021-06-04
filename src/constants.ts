@@ -35,10 +35,10 @@ export const MAP_CENTER = [47.8, 2.6]
 export const TILE_LAYERS = [
   {
     checked: false,
-    url: '"http://{s}.tile.openstreetmap.org/osmfr/{z}/{x}/{y}.png',
+    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png	',
     name: 'OpenStreetMap',
     attribution: '&copy OpenStreetMap',
-    subdomains: ['a', 'b', 'c'],
+    subdomains: [],
   },
   {
     checked: true,
