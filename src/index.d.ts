@@ -1,3 +1,8 @@
+export interface Image {
+  label: string
+  imgPath: string
+}
+
 export interface ZoneHumide {
   nom: string
   code: string
@@ -10,4 +15,5 @@ export interface ZoneHumide {
   menaces: string
   diagnostic_bio: string
   criteres_delim: string[]
+  images: Image[]
 }

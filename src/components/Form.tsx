@@ -1,19 +1,10 @@
-import {
-  Button,
-  Paper,
-  Stack,
-  TextField,
-  Box,
-  Typography,
-} from '@material-ui/core'
+import { Button, Paper, Stack, TextField, Typography } from '@material-ui/core'
 import { useRouter } from 'next/dist/client/router'
-import { FC, useState, useContext } from 'react'
+import { FC, useContext } from 'react'
 import { AppContext } from './AppContext'
-import SwipeableViews from 'react-swipeable-views'
-import { autoPlay } from 'react-swipeable-views-utils'
 import { ZoneHumide } from '..'
+import Images from './Images'
 
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
 const isProd = process.env.NODE_ENV === 'production'
 
 const images = [
@@ -31,11 +22,8 @@ const images = [
   },
 ]
 
-const maxSteps = images.length
-
 const Form: FC = () => {
   const router = useRouter()
-  const [activeStep, setActiveStep] = useState(0)
   const { feature } = useContext(AppContext)
   const zoneHumide = feature.properties as ZoneHumide
 
@@ -45,7 +33,7 @@ const Form: FC = () => {
 
   return (
     <Paper elevation={0} sx={{ height: '100%', p: 1, overflow: 'auto' }}>
-      <Stack spacing={4}>
+      <Stack spacing={1}>
         <Stack direction="row" spacing={2}>
           <Button variant="outlined" onClick={handleOnBack} fullWidth>
             Retour
@@ -54,24 +42,7 @@ const Form: FC = () => {
             Telecharger
           </Button>
         </Stack>
-        <AutoPlaySwipeableViews index={0} enableMouseEvents>
-          {images.map((step, index) => (
-            <div key={step.label}>
-              {Math.abs(activeStep - index) <= 2 ? (
-                <Box
-                  component="img"
-                  sx={{
-                    display: 'block',
-                    overflow: 'hidden',
-                    width: '100%',
-                  }}
-                  src={step.imgPath}
-                  alt={step.label}
-                />
-              ) : null}
-            </div>
-          ))}
-        </AutoPlaySwipeableViews>
+        <Images images={zoneHumide.images || images} />
         {zoneHumide.code && (
           <Stack spacing={2}>
             <Typography variant="h6">
