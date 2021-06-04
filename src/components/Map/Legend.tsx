@@ -46,7 +46,7 @@ const Item: FC<LegendItem> = ({ color, name }) => {
 
 const Legend: FC<LegendProps> = ({ items = [] }) => {
   const classes = useStyles()
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   const handleToggle = () => {
     setOpen(!open)
