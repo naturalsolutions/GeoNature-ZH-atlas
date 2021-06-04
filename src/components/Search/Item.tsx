@@ -50,7 +50,7 @@ const Item: FC<ItemProps> = ({ value }) => {
           }/images/thumbnail_not_found.svg`}
           className={classes.image}
         />
-        <Stack className={classes.content} spacing={1}>
+        <Stack className={classes.content} spacing={1} alignItems="flex-start">
           <Typography
             variant="body2"
             color="textPrimary"
