@@ -1,5 +1,6 @@
 import { Container, makeStyles } from '@material-ui/core'
 import { FC } from 'react'
+import Footer from '../Footer'
 import NavBar from '../NavBar'
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +21,7 @@ const LayoutDefault: FC = ({ children }) => {
     <Container className={classes.root} maxWidth={false} disableGutters={true}>
       <NavBar />
       <main>{children}</main>
+      <Footer />
     </Container>
   )
 }
