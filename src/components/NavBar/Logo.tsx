@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   title: {
     padding: 0,
     margin: 0,
-    fontWeight: 'bold',
+    fontWeight: 700,
     textTransform: 'uppercase',
   },
   subtitle: {
@@ -27,15 +27,18 @@ const Logo: FC = () => {
   }
 
   return (
-    <Stack className={classes.root} onClick={handleGoToHome}>
+    <Stack
+      className={classes.root}
+      direction="row"
+      justifyContent="flex-start"
+      alignItems="center"
+      spacing={1}
+      onClick={handleGoToHome}
+    >
       <Typography className={classes.title} color="primary">
         Geonature
       </Typography>
-      <Typography
-        className={classes.subtitle}
-        color="primary"
-        variant="caption"
-      >
+      <Typography className={classes.subtitle} color="primary">
         Zones Humides
       </Typography>
     </Stack>
