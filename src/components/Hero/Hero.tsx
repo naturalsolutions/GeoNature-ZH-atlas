@@ -1,13 +1,12 @@
 import { FC } from 'react'
 import { makeStyles, Typography, Box, Button, Stack } from '@material-ui/core'
-
-const isProd = process.env.NODE_ENV === 'production'
+import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: 400,
-    backgroundImage: `url(${isProd ? '/geonature-atlas' : ''}/images/hero.png)`,
+    backgroundImage: 'url(/images/hero.png)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -39,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Hero: FC = () => {
   const classes = useStyles()
+  const router = useRouter()
+
+  const handleGoToMap = () => {
+    router.push('/map')
+  }
 
   return (
     <>
@@ -54,7 +58,7 @@ const Hero: FC = () => {
           className={classes.button}
           variant="contained"
           size="large"
-          href={`${isProd ? '/geonature-atlas' : ''}/map`}
+          onClick={handleGoToMap}
         >
           Accéder à l'atlas
         </Button>

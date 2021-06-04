@@ -2,8 +2,6 @@ import { createContext, FC, useEffect, useState } from 'react'
 import { FeatureCollection, Feature } from 'geojson'
 import { useRouter } from 'next/dist/client/router'
 
-const isProd = process.env.NODE_ENV === 'production'
-
 export type Filter = Record<string, string>
 
 export interface Context {
@@ -64,9 +62,7 @@ const AppContextProvider: FC = ({ children }) => {
     let newGeojson = {} as FeatureCollection
 
     try {
-      const data = await fetch(
-        `${isProd ? '/geonature-atlas' : ''}/geonature.geojson`
-      )
+      const data = await fetch('/geonature.geojson')
 
       newGeojson = await data.json()
       setGeoJSON(newGeojson)

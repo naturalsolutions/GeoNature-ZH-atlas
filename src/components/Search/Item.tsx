@@ -15,8 +15,6 @@ export interface ItemProps {
   value: ZoneHumide
 }
 
-const isProd = process.env.NODE_ENV === 'production'
-
 const useStyles = makeStyles({
   root: {
     overflow: 'hidden',
@@ -38,18 +36,13 @@ const Item: FC<ItemProps> = ({ value }) => {
   const classes = useStyles()
 
   const handleShowForm = () => {
-    router.push(`${isProd ? '/geonature-atlas' : ''}/map?id=${value.code}`)
+    router.push(`/map?id=${value.code}`)
   }
 
   return (
     <Paper className={classes.root} onClick={handleShowForm}>
       <Stack direction="row" spacing={2}>
-        <img
-          src={`${
-            isProd ? '/geonature-atlas' : ''
-          }/images/thumbnail_not_found.svg`}
-          className={classes.image}
-        />
+        <img src="/images/thumbnail_not_found.svg" className={classes.image} />
         <Stack className={classes.content} spacing={1} alignItems="flex-start">
           <Typography
             variant="body2"

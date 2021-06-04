@@ -6,8 +6,6 @@ import SwipeableViews from 'react-swipeable-views'
 import { autoPlay } from 'react-swipeable-views-utils'
 import { Image } from '../index'
 
-const isProd = process.env.NODE_ENV === 'production'
-
 interface ImagesProps {
   images: Image[]
 }

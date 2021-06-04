@@ -31,8 +31,7 @@ const useStyles = makeStyles({
 
 const Footer: FC = () => {
   const classes = useStyles()
-  const isProd = process.env.NODE_ENV === 'production'
-  const image = `${isProd ? '/geonature-atlas' : ''}/images/partenaire.svg`
+  const image = '/images/partenaire.svg'
 
   return (
     <Box className={classes.root}>

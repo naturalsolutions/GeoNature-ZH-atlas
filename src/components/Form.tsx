@@ -5,20 +5,18 @@ import { AppContext } from './AppContext'
 import { ZoneHumide } from '..'
 import Images from './Images'
 
-const isProd = process.env.NODE_ENV === 'production'
-
 const images = [
   {
     label: 'ZH',
-    imgPath: `${isProd ? '/geonature-atlas' : ''}/images/zh.jpg`,
+    imgPath: '/images/zh.jpg',
   },
   {
     label: 'ZH 1',
-    imgPath: `${isProd ? '/geonature-atlas' : ''}/images/zh2.jpg`,
+    imgPath: '/images/zh2.jpg',
   },
   {
     label: 'ZH 2',
-    imgPath: `${isProd ? '/geonature-atlas' : ''}/images/zh3.jpg`,
+    imgPath: '/images/zh3.jpg',
   },
 ]
 
@@ -28,7 +26,7 @@ const Form: FC = () => {
   const zoneHumide = feature.properties as ZoneHumide
 
   const handleOnBack = () => {
-    router.push(`${isProd ? '/geonature-atlas' : ''}/map`)
+    router.push('/map')
   }
 
   return (
