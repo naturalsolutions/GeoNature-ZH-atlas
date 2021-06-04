@@ -96,19 +96,21 @@ const Form: FC = () => {
               label="Type"
               value={zoneHumide.type}
             />
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={2} justifyContent="space-between">
               <TextField
                 size="small"
+                fullWidth
                 InputProps={{
                   readOnly: true,
                 }}
                 type="number"
                 name="superficie"
-                label="Superficie"
+                label="Superficie (m2)"
                 value={zoneHumide.superficie}
               />
               <TextField
                 size="small"
+                fullWidth
                 InputProps={{
                   readOnly: true,
                 }}
