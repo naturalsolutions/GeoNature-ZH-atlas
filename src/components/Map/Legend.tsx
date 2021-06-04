@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   root: {
     padding: '1rem',
     position: 'absolute',
-    zIndex: 1000,
+    zIndex: 1001,
     bottom: 10,
     left: 10,
   },

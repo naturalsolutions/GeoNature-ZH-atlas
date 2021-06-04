@@ -6,18 +6,18 @@ import {
   MenuItem,
   Select,
   Stack,
-  Paper,
+  Box,
   Typography,
+  Theme,
 } from '@material-ui/core'
 import Item from './Item'
 import { FC, useState, useContext, useEffect } from 'react'
 import { AppContext } from '../AppContext'
 import { ZoneHumide } from '../..'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles<Theme>((theme) => ({
   root: {
     width: '100%',
-    height: '100%',
     padding: '1rem .5rem',
   },
 }))
@@ -111,7 +111,7 @@ const Search: FC = () => {
   }, [filter])
 
   return (
-    <Paper className={classes.root}>
+    <Box className={classes.root}>
       <Stack
         sx={{ width: '100%', height: '100%', overflow: 'auto' }}
         spacing={1}
@@ -182,7 +182,7 @@ const Search: FC = () => {
           ))}
         </Stack>
       </Stack>
-    </Paper>
+    </Box>
   )
 }
 

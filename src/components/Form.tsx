@@ -32,7 +32,10 @@ const Form: FC = () => {
   }
 
   return (
-    <Paper elevation={0} sx={{ height: '100%', p: 1, overflow: 'auto' }}>
+    <Paper
+      elevation={0}
+      sx={{ height: '100%', p: 1, pb: 10, overflow: 'auto' }}
+    >
       <Stack spacing={1}>
         <Stack direction="row" spacing={2}>
           <Button variant="outlined" onClick={handleOnBack} fullWidth>

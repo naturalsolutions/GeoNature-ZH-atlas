@@ -8,16 +8,19 @@ export type Filter = Record<string, string>
 
 export interface Context {
   isLoading: boolean
+  hidden: boolean
   feature: Feature
   geoJSON: FeatureCollection
   results: FeatureCollection
   filter: Filter
   setResults?: any
   setFilter: any
+  setHidden: any
 }
 
 const initialContext: Context = {
   isLoading: false,
+  hidden: false,
   feature: {
     type: 'Feature',
     geometry: {
@@ -42,12 +45,14 @@ const initialContext: Context = {
   },
   setResults: () => {},
   setFilter: () => {},
+  setHidden: () => {},
 }
 
 const AppContext = createContext(initialContext)
 
 const AppContextProvider: FC = ({ children }) => {
   const router = useRouter()
+  const [hidden, setHidden] = useState<boolean>(false)
   const [geoJSON, setGeoJSON] = useState(initialContext.geoJSON)
   const [feature, setFeature] = useState<Feature>(initialContext.feature)
   const [results, setResults] = useState(initialContext.results)
@@ -102,6 +107,8 @@ const AppContextProvider: FC = ({ children }) => {
         setFilter,
         isLoading,
         feature,
+        hidden,
+        setHidden,
       }}
     >
       {children}

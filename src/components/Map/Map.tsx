@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 const Map: FC = () => {
   const router = useRouter()
   const classes = useStyles()
-  const { results } = useContext(AppContext)
+  const { results, hidden } = useContext(AppContext)
   const [map, setMap] = useState<MapL>()
   const geojsonRef = useRef<GeoJSONL>()
 
@@ -28,6 +28,15 @@ const Map: FC = () => {
       map.flyToBounds(geojsonRef.current.getBounds())
     }
   }, [map, results])
+
+  useEffect(() => {
+    if (map && hidden) {
+      window.dispatchEvent(new Event('resize'))
+      setTimeout(() => {
+        map.flyToBounds(geojsonRef.current.getBounds())
+      }, 10)
+    }
+  }, [map, hidden])
 
   const handleOnEachFeature = (feature, layer) => {
     layer.on({

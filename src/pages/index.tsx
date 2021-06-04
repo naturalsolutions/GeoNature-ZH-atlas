@@ -8,7 +8,7 @@ const IndexPage: NextPage = () => {
     <LayoutDefault>
       <Hero />
       <Container>
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ my: 10 }}>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
             euismod diam sed lacus eleifend pulvinar. Donec sit amet finibus
