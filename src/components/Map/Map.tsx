@@ -7,6 +7,7 @@ import { AppContext } from '../AppContext'
 import Legend from './Legend'
 import { TYPES, TYPES_COLORS, TILE_LAYERS } from '../../constants'
 import { makeStyles } from '@material-ui/core'
+import Fullscreen from './Fullscreen/Fullscreen'
 
 const useStyles = makeStyles({
   root: {
@@ -84,6 +85,7 @@ const Map: FC = () => {
           }
         })}
       />
+      <Fullscreen />
     </MapContainer>
   )
 }

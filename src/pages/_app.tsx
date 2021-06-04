@@ -6,6 +6,7 @@ import { CacheProvider } from '@emotion/react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import createCache from '@emotion/cache'
 import theme from '../styles/theme'
+import '../components/Map/Fullscreen/Control.FullScreen.css'
 
 export const cache = createCache({ key: 'css', prepend: true })
 
