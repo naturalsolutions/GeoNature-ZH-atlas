@@ -144,7 +144,7 @@ const Search: FC = () => {
             </Select>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel>Commune</InputLabel>
+            <InputLabel>Commune(s)</InputLabel>
             <Select
               value={filter.communes}
               onChange={(e) => handleFilters(e, 'communes')}

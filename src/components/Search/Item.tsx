@@ -59,17 +59,6 @@ const Item: FC<ItemProps> = ({ value }) => {
           >
             {value.nom.toUpperCase()}
           </Typography>
-          {value.bassin_versant && (
-            <Stack direction="row" spacing={1}>
-              {value.bassin_versant.map((bassin_versant) => (
-                <Chip
-                  key={bassin_versant}
-                  label={bassin_versant}
-                  size="small"
-                />
-              ))}
-            </Stack>
-          )}
           <Chip
             avatar={
               <Box

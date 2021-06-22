@@ -61,7 +61,7 @@ const Legend: FC<LegendProps> = ({ items = [] }) => {
           onClick={handleToggle}
           justifyContent="space-between"
         >
-          <Typography>Legend</Typography>
+          <Typography>Légende</Typography>
           {open ? <ExpandMoreIcon /> : <ExpandLessIcon />}
         </Stack>
         <Divider sx={{ display: open ? 'block' : 'none' }} />

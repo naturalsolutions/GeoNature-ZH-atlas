@@ -40,7 +40,7 @@ const Form: FC = () => {
             Retour
           </Button>
           <Button variant="outlined" onClick={handleOnBack} fullWidth>
-            Telecharger
+            Télécharger fiche de synthèse
           </Button>
         </Stack>
         <Images images={zoneHumide.images || images} />
@@ -65,7 +65,7 @@ const Form: FC = () => {
                 readOnly: true,
               }}
               name="type"
-              label="Type"
+              label="Type de zone humide"
               value={zoneHumide.type}
             />
             <Stack direction="row" spacing={2} justifyContent="space-between">
@@ -77,8 +77,8 @@ const Form: FC = () => {
                 }}
                 type="number"
                 name="superficie"
-                label="Superficie (m2)"
-                value={zoneHumide.superficie}
+                label="Superficie (ha)"
+                value={zoneHumide.superficie.toFixed(2)}
               />
               <TextField
                 size="small"
@@ -97,7 +97,7 @@ const Form: FC = () => {
                 readOnly: true,
               }}
               name="operateur"
-              label="Opérateur"
+              label="Opérateur de l’inventaire"
               value={zoneHumide.operateur}
             />
             <TextField
@@ -109,14 +109,24 @@ const Form: FC = () => {
               label="Menaces"
               value={zoneHumide.menaces}
             />
+            <Typography variant="caption">Diagnostic fonctionnel</Typography>
             <TextField
               size="small"
               InputProps={{
                 readOnly: true,
               }}
               name="diagnostic_bio"
-              label="Diagnostic"
+              label="Biologique / Ecologique"
               value={zoneHumide.diagnostic_bio}
+            />
+            <TextField
+              size="small"
+              InputProps={{
+                readOnly: true,
+              }}
+              name="diagnostic_hydro"
+              label="Hydrologique / Biogéochimique"
+              value={zoneHumide.diagnostic_hydro}
             />
             <TextField
               size="small"
