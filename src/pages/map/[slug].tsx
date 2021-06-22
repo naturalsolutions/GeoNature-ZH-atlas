@@ -16,4 +16,9 @@ const MapPage: NextPage = () => {
   )
 }
 
+MapPage.getInitialProps = async () => {
+  return {}
+}
+
+
 export default MapPage

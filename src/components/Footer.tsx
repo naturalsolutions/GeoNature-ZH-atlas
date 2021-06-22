@@ -65,12 +65,7 @@ const Footer: FC = () => {
                 {new Array(12).fill(0).map((v, i) => {
                   return (
                     <Grid key={i} item xs={3} sm={2}>
-                      <Image
-                        src={image}
-                        alt={image}
-                        height="90%"
-                        width="90%"
-                      />
+                      <img src={image} alt={image} height="90%" width="90%" />
                     </Grid>
                   )
                 })}

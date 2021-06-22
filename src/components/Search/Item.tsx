@@ -45,9 +45,9 @@ const Item: FC<ItemProps> = ({ value }) => {
   return (
     <Paper className={classes.root} onClick={handleShowForm}>
       <Stack direction="row" spacing={2}>
-        <Image
+        <img
           src="/images/thumbnail_not_found.svg"
-          width="100%"
+          width="100px"
           height="100%"
           alt="not-found"
         />
