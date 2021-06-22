@@ -1,15 +1,13 @@
-import * as React from 'react'
+import { FC, Children } from 'react'
 import { CacheProvider } from '@emotion/react'
 import createCache from '@emotion/cache'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { ServerStyleSheets } from '@material-ui/styles'
 import createEmotionServer from '@emotion/server/create-instance'
 import theme from '../styles/theme'
 
-const getCache = () => {
+function getCache() {
   const cache = createCache({ key: 'css', prepend: true })
   cache.compat = true
-
   return cache
 }
 
@@ -22,7 +20,7 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=optional"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
         </Head>
         <body>
@@ -59,23 +57,25 @@ MyDocument.getInitialProps = async (ctx) => {
   // 3. app.render
   // 4. page.render
 
-  // Render app and page and get the context of the page with collected side effects.
-  const sheets = new ServerStyleSheets()
   const originalRenderPage = ctx.renderPage
 
   const cache = getCache()
   const { extractCriticalToChunks } = createEmotionServer(cache)
 
-  ctx.renderPage = () =>
-    originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-      // Take precedence over the CacheProvider in our custom _app.js
-      enhanceComponent: (Component) => (props) =>
+  const enhanceComponent = (Component) => {
+    const NewComponent: FC = (props) =>
         (
           <CacheProvider value={cache}>
             <Component {...props} />
           </CacheProvider>
-        ),
+        )
+
+      return NewComponent
+  }
+
+  ctx.renderPage = () =>
+    originalRenderPage({
+      enhanceComponent
     })
 
   const initialProps = await Document.getInitialProps(ctx)
@@ -93,8 +93,7 @@ MyDocument.getInitialProps = async (ctx) => {
     ...initialProps,
     // Styles fragment is rendered after the app and page rendering finish.
     styles: [
-      ...React.Children.toArray(initialProps.styles),
-      sheets.getStyleElement(),
+      ...Children.toArray(initialProps.styles),
       ...emotionStyleTags,
     ],
   }
