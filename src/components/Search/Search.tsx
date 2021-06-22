@@ -111,7 +111,7 @@ const Search: FC = () => {
     }
 
     setResults(newResults)
-  }, [filter])
+  }, [filter, geoJSON, setResults])
 
   return (
     <Box className={classes.root}>

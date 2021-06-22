@@ -49,7 +49,7 @@ const Hero: FC = () => {
       <div className={classes.root}>
         <Box className={classes.box}>
           <Typography className={classes.text} variant="h1" color="white">
-            Bienvenue sur l'atlas des zones humides du PNR luberon
+            Bienvenue sur l&apos;atlas des zones humides du PNR luberon
           </Typography>
         </Box>
       </div>
@@ -60,7 +60,7 @@ const Hero: FC = () => {
           size="large"
           onClick={handleGoToMap}
         >
-          Accéder à l'atlas
+          Accéder à l&apos;atlas
         </Button>
       </Stack>
     </>

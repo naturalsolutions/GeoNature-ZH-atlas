@@ -5,6 +5,7 @@ export interface Image {
 
 export interface ZoneHumide {
   nom: string
+  slug: string
   code: string
   date: Date
   type: string

@@ -6,6 +6,7 @@ import {
   Box,
   makeStyles,
 } from '@material-ui/core'
+import Image from 'next/image'
 import { useRouter } from 'next/dist/client/router'
 import { FC } from 'react'
 import { ZoneHumide } from '../..'
@@ -20,9 +21,6 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     cursor: 'pointer',
   },
-  image: {
-    width: 100,
-  },
   box: {
     borderRadius: '50%',
   },
@@ -36,13 +34,23 @@ const Item: FC<ItemProps> = ({ value }) => {
   const classes = useStyles()
 
   const handleShowForm = () => {
-    router.push(`/map?id=${value.code}`)
+    router.push({
+      pathname: '/map/[slug]',
+      query: {
+        slug: value.slug,
+      },
+    })
   }
 
   return (
     <Paper className={classes.root} onClick={handleShowForm}>
       <Stack direction="row" spacing={2}>
-        <img src="/images/thumbnail_not_found.svg" className={classes.image} />
+        <Image
+          src="/images/thumbnail_not_found.svg"
+          width="100%"
+          height="100%"
+          alt="not-found"
+        />
         <Stack className={classes.content} spacing={1} alignItems="flex-start">
           <Typography
             variant="body2"

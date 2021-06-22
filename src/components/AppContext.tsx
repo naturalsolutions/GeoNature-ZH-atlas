@@ -78,10 +78,10 @@ const AppContextProvider: FC = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    if (router.query.id && geoJSON.features.length > 0) {
+    if (router.query.slug && geoJSON.features.length > 0) {
       const newResults = { ...geoJSON }
       const newFeature = newResults.features.find(
-        (f) => f.properties.code === router.query.id
+        (f) => f.properties.slug === router.query.slug
       )
 
       newResults.features = [newFeature]

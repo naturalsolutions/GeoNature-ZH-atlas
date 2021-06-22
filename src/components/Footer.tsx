@@ -9,17 +9,13 @@ import {
   Link,
 } from '@material-ui/core'
 import { FC } from 'react'
+import Image from 'next/image'
 
 const useStyles = makeStyles({
   root: {
     background: '#384145',
     color: '#fff',
     padding: '75px 0',
-  },
-  imagePartenaire: {
-    width: '100%',
-    height: '100%',
-    padding: '0 1rem 1rem 0',
   },
   link: {
     color: '#fff',
@@ -56,7 +52,7 @@ const Footer: FC = () => {
                 GeoNature Citizen
               </Link>
               <Button size="large" variant="outlined">
-                S'inscrire
+                S&apos;inscrire
               </Button>
             </Stack>
           </Grid>
@@ -69,7 +65,12 @@ const Footer: FC = () => {
                 {new Array(12).fill(0).map((v, i) => {
                   return (
                     <Grid key={i} item xs={3} sm={2}>
-                      <img src={image} className={classes.imagePartenaire} />
+                      <Image
+                        src={image}
+                        alt={image}
+                        height="90%"
+                        width="90%"
+                      />
                     </Grid>
                   )
                 })}

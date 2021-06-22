@@ -42,9 +42,9 @@ const Map: FC = () => {
     layer.on({
       click: () => {
         router.push({
-          pathname: '/map',
+          pathname: '/map/[slug]',
           query: {
-            id: feature.properties.code,
+            slug: feature.properties.slug,
           },
         })
       },
