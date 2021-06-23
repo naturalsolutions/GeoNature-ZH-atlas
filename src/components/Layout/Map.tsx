@@ -47,12 +47,12 @@ const useStyles = makeStyles<Theme, MapStyleProps>((theme) => ({
     height: '100%',
     width: '100%',
   },
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up('md')]: {
     container: {
       paddingTop: 62,
     },
     aside: {
-      width: 500,
+      width: 600,
     },
     fab: {
       display: 'none',

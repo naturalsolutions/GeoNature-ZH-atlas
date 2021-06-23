@@ -1,6 +1,9 @@
 import { FC } from 'react'
 import { makeStyles, Typography, Box, Button, Stack } from '@material-ui/core'
 import { useRouter } from 'next/router'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +52,7 @@ const Hero: FC = () => {
       <div className={classes.root}>
         <Box className={classes.box}>
           <Typography className={classes.text} variant="h1" color="white">
-            Bienvenue sur l&apos;atlas des zones humides du PNR luberon
+            {publicRuntimeConfig.pages.home.title}
           </Typography>
         </Box>
       </div>

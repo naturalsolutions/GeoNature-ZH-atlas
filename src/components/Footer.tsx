@@ -9,7 +9,10 @@ import {
   Link,
 } from '@material-ui/core'
 import { FC } from 'react'
-import Image from 'next/image'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
+
 
 const useStyles = makeStyles({
   root: {
@@ -27,7 +30,6 @@ const useStyles = makeStyles({
 
 const Footer: FC = () => {
   const classes = useStyles()
-  const image = '/images/partenaire.svg'
 
   return (
     <Box className={classes.root}>
@@ -42,15 +44,11 @@ const Footer: FC = () => {
               <Typography variant="h6" className={classes.title}>
                 A Propos
               </Typography>
-              <Link className={classes.link} href="https://geonature.fr/">
-                GeoNature
-              </Link>
-              <Link
-                className={classes.link}
-                href="https://www.natural-solutions.eu/blog/geonature-citizen"
-              >
-                GeoNature Citizen
-              </Link>
+              {publicRuntimeConfig.layout.footer.links.map((link) => (
+                <Link key={link.title} className={classes.link} href={link.href}>
+                  {link.title}
+                </Link>
+              ))}
               <Button size="large" variant="outlined">
                 S&apos;inscrire
               </Button>
@@ -62,13 +60,20 @@ const Footer: FC = () => {
                 Partenaires
               </Typography>
               <Grid container>
-                {new Array(12).fill(0).map((v, i) => {
-                  return (
-                    <Grid key={i} item xs={3} sm={2}>
-                      <img src={image} alt={image} height="90%" width="90%" />
-                    </Grid>
-                  )
-                })}
+                {publicRuntimeConfig.layout.footer.images.map(
+                  (image, index) => {
+                    return (
+                      <Grid key={index} item xs={3} sm={2}>
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          height="90%"
+                          width="90%"
+                        />
+                      </Grid>
+                    )
+                  }
+                )}
               </Grid>
             </Stack>
           </Grid>

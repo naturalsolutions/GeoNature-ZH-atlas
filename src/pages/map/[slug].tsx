@@ -6,7 +6,7 @@ import { AppContextProvider } from '@components/AppContext'
 
 const Map = dynamic(() => import('@components/Map'), { ssr: false })
 
-const MapPage: NextPage = () => {
+const MapPageSlug: NextPage = () => {
   return (
     <AppContextProvider>
       <LayoutMap sidebar={<Form />}>
@@ -16,9 +16,9 @@ const MapPage: NextPage = () => {
   )
 }
 
-MapPage.getInitialProps = async () => {
+MapPageSlug.getInitialProps = async () => {
   return {}
 }
 
 
-export default MapPage
+export default MapPageSlug

@@ -1,4 +1,29 @@
+const yaml = require('js-yaml')
+const fs = require('fs')
+
+let publicRuntimeConfig = {
+  pages: {
+    home: {
+      title: '',
+      heroText: '',
+    },
+  },
+  layout: {
+    links: [{ title: '', href: '' }],
+    footer: {
+      images: [{ name: '', image: '' }],
+    },
+  },
+}
+
+try {
+  publicRuntimeConfig = yaml.load(fs.readFileSync('./data/config.yml', 'utf8'))
+} catch (e) {
+  console.log(e)
+}
+
 module.exports = {
+  publicRuntimeConfig,
   exportPathMap: async function () {
     return {
       '/': { page: '/' },
