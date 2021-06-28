@@ -1,8 +1,9 @@
 const yaml = require('js-yaml')
 const fs = require('fs')
+const axios = require('axios')
 
-const geojson = {
-  features: [],
+if (!process.env.GEOJSON_URL) {
+  throw new Error('GEOJSON_URL is mandatory')
 }
 
 let publicRuntimeConfig = {
@@ -26,20 +27,21 @@ try {
   console.log(e)
 }
 
-const routes = geojson.features.reduce((acc, value) => {
-  acc[`/map/${value.properties.slug}`] = {
-    page: '/map/[slug]',
-    query: {
-      slug: value.properties.slug,
-    },
-  }
-
-  return acc
-}, {})
-
 module.exports = {
   publicRuntimeConfig,
   exportPathMap: async function () {
+    const { data: geojson } = await axios.get(process.env.GEOJSON_URL)
+    const routes = geojson.features.reduce((acc, value) => {
+      acc[`/map/${value.properties.slug}`] = {
+        page: '/map/[slug]',
+        query: {
+          slug: value.properties.slug,
+        },
+      }
+
+      return acc
+    }, {})
+
     return {
       '/': { page: '/' },
       '/map': { page: '/map' },
