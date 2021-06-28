@@ -1,20 +1,35 @@
-image: node
+stages:
+  - build
+  # - pages
 
 cache:
   paths:
     - node_modules
 
-pages:
-  before_script:
-    - npm install
+build_image:
+  stage: build
+  image: docker:dind
   script:
-    - npm run publish
-    - rm -rf public
-    - mv out public
-  after_script:
-    - rm -rf out
-  artifacts:
-    paths:
-      - public
+    - docker login ${CI_REGISTRY} -u gitlab-ci-token -p ${CI_BUILD_TOKEN}
+    - docker build -t ${CI_REGISTRY_IMAGE}:latest .
+    - docker push ${CI_REGISTRY_IMAGE}:latest
   only:
-    - master
+    - main
+  tags:
+    - ns01
+
+# pages:
+#   image: node
+#   before_script:
+#     - npm install
+#   script:
+#     - npm run publish
+#     - rm -rf public
+#     - mv out public
+#   after_script:
+#     - rm -rf out
+#   artifacts:
+#     paths:
+#       - public
+#   only:
+#     - main
