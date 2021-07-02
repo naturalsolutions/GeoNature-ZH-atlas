@@ -4,7 +4,6 @@ import {
   makeStyles,
   Grid,
   Stack,
-  Button,
   Typography,
   Link,
 } from '@material-ui/core'
@@ -12,7 +11,6 @@ import { FC } from 'react'
 import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
-
 
 const useStyles = makeStyles({
   root: {
@@ -45,13 +43,14 @@ const Footer: FC = () => {
                 A Propos
               </Typography>
               {publicRuntimeConfig.layout.footer.links.map((link) => (
-                <Link key={link.title} className={classes.link} href={link.href}>
+                <Link
+                  key={link.title}
+                  className={classes.link}
+                  href={link.href}
+                >
                   {link.title}
                 </Link>
               ))}
-              <Button size="large" variant="outlined">
-                S&apos;inscrire
-              </Button>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={9}>
@@ -78,6 +77,20 @@ const Footer: FC = () => {
             </Stack>
           </Grid>
         </Grid>
+        <Stack>
+          {publicRuntimeConfig.layout.footer.legal.map((text, index) => (
+            <Typography align="center" variant="caption" key={index}>
+              {text}
+            </Typography>
+          ))}
+          <Typography variant="caption" align="center">
+            Développé par Natura Solutions
+          </Typography>
+          <Typography variant="caption" align="center">
+            © 2009 - {new Date().getFullYear()} |
+            {publicRuntimeConfig.layout.footer.creator}
+          </Typography>
+        </Stack>
       </Container>
     </Box>
   )

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Head from 'next/head'
 import { AppProps } from 'next/app'
+import { NoSsr } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { CacheProvider } from '@emotion/react'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -23,7 +24,9 @@ export default function MyApp(props: AppProps) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        <NoSsr>
+          <Component {...pageProps} />
+        </NoSsr>
       </ThemeProvider>
     </CacheProvider>
   )

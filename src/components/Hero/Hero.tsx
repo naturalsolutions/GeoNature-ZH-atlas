@@ -1,29 +1,40 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { makeStyles, Typography, Box, Button, Stack } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import getConfig from 'next/config'
+import SwipeableViews from 'react-swipeable-views'
+import { autoPlay } from 'react-swipeable-views-utils'
+
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
 
 const { publicRuntimeConfig } = getConfig()
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    height: 400,
-    backgroundImage: 'url(/images/hero.png)',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    marginTop: 56,
+    position: 'relative',
+  },
+  images: {
+    width: '100%',
+    height: 280,
+    overflow: 'hidden',
+  },
+  textContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    textAlign: 'center',
+    fontWeight: 900,
+    height: 'calc(100% - 39px)',
     display: 'flex',
+    alignItems: 'center',
     justifyContent: 'center',
   },
-  box: {
-    width: 450,
-    textAlign: 'center',
-    marginTop: '2rem',
-  },
   text: {
-    fontSize: '50px',
-    fontWeight: 600,
+    maxWidth: 300,
   },
   button: {
     borderRadius: 0,
@@ -34,7 +45,16 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.up('sm')]: {
     root: {
+      marginTop: 48,
+    },
+    images: {
       height: 800,
+    },
+    text: {
+      maxWidth: 600,
+    },
+    button: {
+      margin: '-20px auto 0 auto',
     },
   },
 }))
@@ -42,19 +62,50 @@ const useStyles = makeStyles((theme) => ({
 const Hero: FC = () => {
   const classes = useStyles()
   const router = useRouter()
+  const [activeStep, setActiveStep] = useState(0)
+
+  const handleStepChange = (step) => {
+    setActiveStep(step)
+  }
 
   const handleGoToMap = () => {
     router.push('/map')
   }
 
   return (
-    <>
-      <div className={classes.root}>
-        <Box className={classes.box}>
-          <Typography className={classes.text} variant="h1" color="white">
+    <div className={classes.root}>
+      <div className={classes.images}>
+        <AutoPlaySwipeableViews
+          index={activeStep}
+          onChangeIndex={handleStepChange}
+          enableMouseEvents
+        >
+          {publicRuntimeConfig.pages.home.images.map((step, index) => (
+            <div key={step.label} style={{ width: '100%', height: '100%' }}>
+              {Math.abs(activeStep - index) <= 2 ? (
+                <Box
+                  component="img"
+                  sx={{
+                    display: 'block',
+                    overflow: 'hidden',
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                  src={step.imgPath}
+                  alt={step.label}
+                />
+              ) : null}
+            </div>
+          ))}
+        </AutoPlaySwipeableViews>
+      </div>
+      <div className={classes.textContainer}>
+        <div className={classes.text}>
+          <Typography variant="h4" color="white">
             {publicRuntimeConfig.pages.home.title}
           </Typography>
-        </Box>
+        </div>
       </div>
       <Stack>
         <Button
@@ -66,7 +117,7 @@ const Hero: FC = () => {
           Accéder à l&apos;atlas
         </Button>
       </Stack>
-    </>
+    </div>
   )
 }
 

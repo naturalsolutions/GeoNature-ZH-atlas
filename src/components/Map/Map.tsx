@@ -25,7 +25,9 @@ const Map: FC = () => {
 
   useEffect(() => {
     if (map && geojsonRef && results.features.length > 0) {
-      map.flyToBounds(geojsonRef.current.getBounds())
+      map.flyToBounds(geojsonRef.current.getBounds(), {
+        animate: false,
+      })
     }
   }, [map, results])
 
@@ -33,7 +35,9 @@ const Map: FC = () => {
     if (map && hidden) {
       window.dispatchEvent(new Event('resize'))
       setTimeout(() => {
-        map.flyToBounds(geojsonRef.current.getBounds())
+        map.flyToBounds(geojsonRef.current.getBounds(), {
+          animate: false,
+        })
       }, 10)
     }
   }, [map, hidden])

@@ -1,10 +1,16 @@
-import { Stack, makeStyles, Typography } from '@material-ui/core'
+import { Stack, makeStyles, Typography, Link } from '@material-ui/core'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
 
 const useStyles = makeStyles({
   root: {
     cursor: 'pointer',
+  },
+  image: {
+    height: '48px',
   },
   title: {
     padding: 0,
@@ -35,11 +41,13 @@ const Logo: FC = () => {
       spacing={1}
       onClick={handleGoToHome}
     >
-      <Typography className={classes.title} color="primary">
-        Geonature
-      </Typography>
+      <img
+        className={classes.image}
+        src={publicRuntimeConfig.layout.header.logo.src}
+        alt={publicRuntimeConfig.layout.header.logo.alt}
+      />
       <Typography className={classes.subtitle} color="primary">
-        Zones Humides
+        zones humides
       </Typography>
     </Stack>
   )

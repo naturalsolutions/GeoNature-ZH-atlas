@@ -12,7 +12,11 @@ const IndexPage: NextPage = () => {
       <Hero />
       <Container>
         <Box sx={{ my: 10 }}>
-          <Typography>{publicRuntimeConfig.pages.home.heroText}</Typography>
+          {publicRuntimeConfig.pages.home.text.map((line, i) => (
+            <Typography key={`line-${i}`} paragraph>
+              {line}
+            </Typography>
+          ))}
         </Box>
       </Container>
     </LayoutDefault>
