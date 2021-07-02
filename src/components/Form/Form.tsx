@@ -1,9 +1,10 @@
 import { Button, Paper, Stack, TextField, Typography } from '@material-ui/core'
 import { useRouter } from 'next/dist/client/router'
 import { FC, useContext } from 'react'
-import { AppContext } from './AppContext'
-import { ZoneHumide } from '..'
-import Images from './Images'
+import { AppContext } from '../AppContext'
+import { ZoneHumide } from '../../index'
+import Images from '../Images'
+import FormItem from './Item'
 
 const images = [
   {
@@ -43,99 +44,43 @@ const Form: FC = () => {
             Télécharger fiche de synthèse
           </Button>
         </Stack>
-        <Images images={zoneHumide.images || images} />
+        <Images images={images} />
         {zoneHumide.code && (
           <Stack spacing={2}>
             <Typography variant="h6">
               {zoneHumide.code.toUpperCase()}{' '}
               {zoneHumide.nom.toLocaleUpperCase()}
             </Typography>
-            <TextField
-              size="small"
-              InputProps={{
-                readOnly: true,
-              }}
-              name="bassin_versant"
+            <FormItem
               label="Bassin versant"
               value={zoneHumide.bassin_versant[0]}
             />
-            <TextField
-              size="small"
-              InputProps={{
-                readOnly: true,
-              }}
-              name="type"
-              label="Type de zone humide"
-              value={zoneHumide.type}
-            />
+            <FormItem label="Type de zone humide" value={zoneHumide.type} />
             <Stack direction="row" spacing={2} justifyContent="space-between">
-              <TextField
-                size="small"
-                fullWidth
-                InputProps={{
-                  readOnly: true,
-                }}
-                type="number"
-                name="superficie"
+              <FormItem
                 label="Superficie (ha)"
                 value={zoneHumide.superficie.toFixed(2)}
               />
-              <TextField
-                size="small"
-                fullWidth
-                InputProps={{
-                  readOnly: true,
-                }}
-                name="date"
+              <FormItem
                 label="Date"
                 value={new Date(zoneHumide.date).toLocaleDateString('fr')}
               />
             </Stack>
-            <TextField
-              size="small"
-              InputProps={{
-                readOnly: true,
-              }}
-              name="operateur"
+            <FormItem
               label="Opérateur de l’inventaire"
               value={zoneHumide.operateur}
             />
-            <TextField
-              size="small"
-              InputProps={{
-                readOnly: true,
-              }}
-              name="menaces"
-              label="Menaces"
-              value={zoneHumide.menaces}
-            />
+            <FormItem label="Menaces" value={zoneHumide.menaces} />
             <Typography variant="caption">Diagnostic fonctionnel</Typography>
-            <TextField
-              size="small"
-              InputProps={{
-                readOnly: true,
-              }}
-              name="diagnostic_bio"
+            <FormItem
               label="Biologique / Ecologique"
               value={zoneHumide.diagnostic_bio}
             />
-            <TextField
-              size="small"
-              InputProps={{
-                readOnly: true,
-              }}
-              name="diagnostic_hydro"
+            <FormItem
               label="Hydrologique / Biogéochimique"
               value={zoneHumide.diagnostic_hydro}
             />
-            <TextField
-              size="small"
-              multiline
-              InputProps={{
-                readOnly: true,
-              }}
-              type="text"
-              name="criteres_delim"
+            <FormItem
               label="Critères de délimitation"
               value={zoneHumide.criteres_delim.join('\n')}
             />

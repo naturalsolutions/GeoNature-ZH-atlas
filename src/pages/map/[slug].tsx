@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
-import Form from '@components/Form'
+import Form from '@components/Form/Form'
 import LayoutMap from '@components/Layout/Map'
 import { AppContextProvider } from '@components/AppContext'
 
@@ -19,6 +19,5 @@ const MapPageSlug: NextPage = () => {
 MapPageSlug.getInitialProps = async () => {
   return {}
 }
-
 
 export default MapPageSlug
