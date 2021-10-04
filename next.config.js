@@ -29,6 +29,7 @@ try {
 
 module.exports = {
   publicRuntimeConfig,
+  trailingSlash: true,
   exportPathMap: async function () {
     const { data: geojson } = await axios.get(process.env.GEOJSON_URL)
     const routes = geojson.features.reduce((acc, value) => {
