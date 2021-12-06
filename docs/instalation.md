@@ -1,5 +1,0 @@
-# Instalation
-
-```bash
-npm install
-```
