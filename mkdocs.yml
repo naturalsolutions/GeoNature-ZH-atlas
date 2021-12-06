@@ -1,1 +1,6 @@
 site_name: GeoNature Zones Humides · Atlas
+nav:
+  - Bienvenue: index.md
+  - Instalation: instalation.md
+  - Configuration: configuration.md
+  - 'Template: Generation du projet': template.md
