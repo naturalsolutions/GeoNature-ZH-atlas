@@ -1,5 +1,6 @@
 stages:
   - build
+  - pages
 
 build_image:
   stage: build
@@ -10,5 +11,19 @@ build_image:
     - docker push ${CI_REGISTRY_IMAGE}:latest
   only:
     - main
+  tags:
+    - ns01
+
+pages:
+  stage: pages
+  image:
+    name: squidfunk/mkdocs-material:7.3.2
+    entrypoint:
+      - ''
+  script:
+    - mkdocs build --site-dir public
+  artifacts:
+    paths:
+      - public
   tags:
     - ns01
