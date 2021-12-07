@@ -39,6 +39,98 @@ pages:
 ---
 ```
 
+### Configuration générale du template
+
+![image](./images/footer.png)
+
+Toutes les pages de l'application partagent des éléments communs, tels que l'en-tête et le pied de page. Les paramètres suivants sont disponibles pour l'adapter à vos besoins :
+
+### Header
+
+Dans l'en-tête, nous pouvons configurer :
+
+#### Logo
+
+| Propiedad | Descripción                                                                                                                     |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
+| src       | Est obligatoire et contient le chemin de l'image qu'on souhaite afficher.                                                       |
+
+```yaml
+---
+layout:
+  header:
+    logo:
+      alt: 'logo'
+      src: /images/partenaires/logo_sit.svg
+---
+```
+
+### Footer
+
+#### Creator
+
+Texte indiquant le propriétaire ou l'administrateur du site
+
+```yaml
+---
+layout:
+  footer:
+    creator: SIT zones humides
+---
+```
+
+#### Legal
+
+```yaml
+---
+layout:
+  footer:
+    legal:
+      - Financé par l’Etat, l’Agence de l’eau Rhône Méditerranée Corse, la Région Provence-Alpes-Côte d’Azur et les Parcs naturels régionaux de Camargue, du Luberon, du Queyras, du Verdon et de la Sainte Baume.
+      - Réalisé en partenariat technique avec le Parc National des Ecrins et le Conservatoire des Espaces Naturels
+---
+```
+
+#### Links
+
+| Propiedad | Descripción                                                                                                                     |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| title     | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
+| href      | L'URL vers laquelle pointe l'hyperlien                                                                                          |
+
+```yaml
+---
+layout:
+  links:
+    - title: GeoNature
+      href: https://geonature.fr
+    - title: GeoNature Citizen
+      href: https://www.natural-solutions.eu/blog/geonature-citizen
+---
+```
+
+#### Images
+
+| Propiedad | Descripción                                                                                                                     |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
+| src       | Est obligatoire et contient le chemin de l'image qu'on souhaite afficher.                                                       |
+
+```yaml
+---
+layout:
+  header:
+    images:
+      - src: '/images/partenaires/dreal_paca.svg'
+        alt: 'DREAL PACA'
+      - src: '/images/partenaires/logo_sit.svg'
+        alt: 'SIT'
+      - src: '/images/partenaires/region_sud.svg'
+        alt: 'Region Sud'
+---
+```
+
 ## Fichier du configuration
 
 La configuration de l'application est divisée en deux sections principales : nous avons d'une part la configuration générale du template (**layout**), et d'autre part la configuration de la page d'accueil (**pages.home**).
@@ -64,39 +156,6 @@ pages:
         alt: zone humide 2
       - src: /images/zh3.jpg
         alt: zone humide 3
----
-```
-
-### Configuration générale du template
-
-![image](./images/footer.png)
-
-Toutes les pages de l'application partagent des éléments communs, tels que l'en-tête et le pied de page. Les paramètres suivants sont disponibles pour l'adapter à vos besoins :
-
-```yaml
----
-layout:
-  header:
-    logo:
-      alt: 'logo'
-      src: /images/partenaires/logo_sit.svg
-  footer:
-    creator: SIT zones humides
-    legal:
-      - Financé par l’Etat, l’Agence de l’eau Rhône Méditerranée Corse, la Région Provence-Alpes-Côte d’Azur et les Parcs naturels régionaux de Camargue, du Luberon, du Queyras, du Verdon et de la Sainte Baume.
-      - Réalisé en partenariat technique avec le Parc National des Ecrins et le Conservatoire des Espaces Naturels
-    images:
-      - src: '/images/partenaires/dreal_paca.svg'
-        alt: 'DREAL PACA'
-      - src: '/images/partenaires/logo_sit.svg'
-        alt: 'SIT'
-      - src: '/images/partenaires/region_sud.svg'
-        alt: 'Region Sud'
-    links:
-      - title: GeoNature
-        href: https://geonature.fr
-      - title: GeoNature Citizen
-        href: https://www.natural-solutions.eu/blog/geonature-citizen
 ---
 ```
 

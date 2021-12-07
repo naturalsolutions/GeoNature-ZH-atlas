@@ -10,6 +10,10 @@ Le template du projet aura toujours une configuration très orientée que vous d
 
 Si vous souhaitez utiliser le template comme point de départ, veuillez suivre les étapes suivantes :
 
+#### Prérequis
+
+Pour pouvoir utiliser la template, vous devez avoir installé [Docker](https://docs.docker.com/engine/install/){.external-link target=\_blank} et [Docker Compose](https://docs.docker.com/compose/install/){.external-link target=\_blank} sur votre système.
+
 #### Téléchargez et extrayez le dossier contenant tous les fichiers
 
 ```bash
