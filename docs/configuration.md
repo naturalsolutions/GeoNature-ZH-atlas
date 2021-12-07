@@ -1,4 +1,4 @@
-La configuration se trouve dans le dossier `./data/config.yml` et est écrite au format [YALM][yaml].
+La configuration se trouve dans le dossier `./data/config.yml` et est écrite au format [YALM][yaml]{ .external-link target=\_blank}.
 
 La configuration de l'application est divisée en deux sections principales : nous avons d'une part la configuration générale du template (**layout**), et d'autre part la configuration de la page principale (**pages.home**).
 
