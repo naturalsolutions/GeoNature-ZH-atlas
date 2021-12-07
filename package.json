@@ -7,6 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start_local": "next build && next start",
     "lint": "next lint",
     "publish": "next build && next export"
   },

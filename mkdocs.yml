@@ -48,5 +48,6 @@ extra_javascript:
 nav:
   - Bienvenue: index.md
   - Installation: installation.md
+  - Installation avec Docker: installation_docker.md
   - Configuration: configuration.md
   - 'Template: Génération du projet': template.md
