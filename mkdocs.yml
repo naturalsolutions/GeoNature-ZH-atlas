@@ -1,4 +1,8 @@
 site_name: GeoNature Zones Humides · Atlas
+
+repo_name: geonature/zones-humides/atlas
+repo_url: https://gitlab.com/natural-solutions/geonature/zones-humides/atlas
+
 theme:
   name: material
   palette:
@@ -45,4 +49,4 @@ nav:
   - Bienvenue: index.md
   - Installation: installation.md
   - Configuration: configuration.md
-  - 'Template: Generation du projet': template.md
+  - 'Template: Génération du projet': template.md
