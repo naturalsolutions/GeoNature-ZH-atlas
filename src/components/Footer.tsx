@@ -42,7 +42,7 @@ const Footer: FC = () => {
               <Typography variant="h6" className={classes.title}>
                 A Propos
               </Typography>
-              {publicRuntimeConfig.layout.footer.links.map((link) => (
+              {publicRuntimeConfig?.layout?.footer?.links?.map((link) => (
                 <Link
                   key={link.title}
                   className={classes.link}
@@ -59,7 +59,7 @@ const Footer: FC = () => {
                 Partenaires
               </Typography>
               <Grid container>
-                {publicRuntimeConfig.layout.footer.images.map(
+                {publicRuntimeConfig?.layout?.footer?.images?.map(
                   (image, index) => {
                     return (
                       <Grid key={index} item xs={3} sm={2}>
@@ -78,7 +78,7 @@ const Footer: FC = () => {
           </Grid>
         </Grid>
         <Stack>
-          {publicRuntimeConfig.layout.footer.legal.map((text, index) => (
+          {publicRuntimeConfig?.layout?.footer?.legal?.map((text, index) => (
             <Typography align="center" variant="caption" key={index}>
               {text}
             </Typography>
@@ -87,8 +87,8 @@ const Footer: FC = () => {
             Développé par Natura Solutions
           </Typography>
           <Typography variant="caption" align="center">
-            © 2009 - {new Date().getFullYear()} |
-            {publicRuntimeConfig.layout.footer.creator}
+            © 2009 - {new Date().getFullYear()}{' '}
+            {publicRuntimeConfig?.layout?.footer?.creator && '|'}
           </Typography>
         </Stack>
       </Container>

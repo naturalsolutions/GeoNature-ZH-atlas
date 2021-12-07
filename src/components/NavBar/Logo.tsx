@@ -41,11 +41,13 @@ const Logo: FC = () => {
       spacing={1}
       onClick={handleGoToHome}
     >
-      <img
-        className={classes.image}
-        src={publicRuntimeConfig.layout.header.logo.src}
-        alt={publicRuntimeConfig.layout.header.logo.alt}
-      />
+      {publicRuntimeConfig?.layout?.header?.logo && (
+        <img
+          className={classes.image}
+          src={publicRuntimeConfig.layout.header.logo.src}
+          alt={publicRuntimeConfig.layout.header.logo.alt}
+        />
+      )}
       <Typography className={classes.subtitle} color="primary">
         zones humides
       </Typography>

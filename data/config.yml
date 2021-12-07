@@ -1,0 +1,26 @@
+pages:
+  home:
+    title: GeoNature Zone Humides · Atlas
+    heroText: Description
+    text:
+      -
+    images:
+      - src:
+        alt:
+
+layout:
+  links:
+    - title:
+      href:
+  header:
+    logo:
+      src:
+      alt:
+  footer:
+    images:
+      - name: ''
+        image: ''
+    links:
+      -
+    legal:
+      -
