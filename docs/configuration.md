@@ -39,17 +39,21 @@ pages:
 ---
 ```
 
+## Fichier du configuration
+
+La configuration de l'application est divisée en deux sections principales : nous avons d'une part la configuration générale du template (**layout**), et d'autre part la configuration de la page d'accueil (**pages.home**).
+
 ### Configuration générale du template
 
 ![image](./images/footer.png)
 
 Toutes les pages de l'application partagent des éléments communs, tels que l'en-tête et le pied de page. Les paramètres suivants sont disponibles pour l'adapter à vos besoins :
 
-### Header
+#### Header
 
 Dans l'en-tête, nous pouvons configurer :
 
-#### Logo
+##### Logo
 
 | Propiedad | Descripción                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
@@ -66,9 +70,9 @@ layout:
 ---
 ```
 
-### Footer
+#### Footer
 
-#### Creator
+##### Creator
 
 Texte indiquant le propriétaire ou l'administrateur du site
 
@@ -80,7 +84,7 @@ layout:
 ---
 ```
 
-#### Legal
+##### Legal
 
 ```yaml
 ---
@@ -92,7 +96,7 @@ layout:
 ---
 ```
 
-#### Links
+##### Links
 
 | Propiedad | Descripción                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
@@ -110,7 +114,7 @@ layout:
 ---
 ```
 
-#### Images
+##### Images
 
 | Propiedad | Descripción                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
@@ -130,10 +134,6 @@ layout:
         alt: 'Region Sud'
 ---
 ```
-
-## Fichier du configuration
-
-La configuration de l'application est divisée en deux sections principales : nous avons d'une part la configuration générale du template (**layout**), et d'autre part la configuration de la page d'accueil (**pages.home**).
 
 ### Configuration de la page d'accueil
 
