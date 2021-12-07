@@ -2,6 +2,42 @@ La configuration se trouve dans le dossier [`./data/config.yml`](https://gitlab.
 
 La configuration de l'application est divisée en deux sections principales : nous avons d'une part la configuration générale du template (**layout**), et d'autre part la configuration de la page d'accueil (**pages.home**).
 
+## Structure du projet
+
+```console
+.
+├── Dockerfile
+├── README.md
+├── data
+│   └── config.yml
+├── mkdocs.yml
+├── next-env.d.ts
+├── next.config.js
+├── node_modules
+├── package-lock.json
+├── package.json
+├── public
+│   ├── favicon.ico
+│   ├── geonature.geojson
+│   └── images
+│       ├── hero.png
+│       ├── icon-fullscreen-2x.png
+│       ├── icon-fullscreen.png
+│       ├── mini.png
+│       ├── ns.png
+│       ├── partenaire.svg
+│       ├── partenaires
+│       │   ├── dreal_paca.svg
+│       │   ├── logo_sit.svg
+│       │   └── region_sud.svg
+│       ├── thumbnail_not_found.svg
+│       ├── zh.jpg
+│       ├── zh2.jpg
+│       └── zh3.jpg
+├── src
+└── tsconfig.json
+```
+
 ## Configuration de la page d'accueil
 
 ![image](/images/home.png)

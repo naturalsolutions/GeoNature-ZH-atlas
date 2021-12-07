@@ -15,7 +15,7 @@ npm install
 <div class="termy">
 
 ```console
-npm build
+npm run build
 
 ---> 100%
 
