@@ -12,7 +12,7 @@ Si vous souhaitez utiliser le template comme point de départ, veuillez suivre l
 
 #### Téléchargez et extrayez le dossier contenant tous les fichiers
 
-```console
+```bash
 curl https://gitlab.com/natural-solutions/geonature/zones-humides/atlas-template/-/archive/master/atlas-template-master.tar.gz | tar -xz
 cd atlas-template-master
 ```
@@ -21,13 +21,13 @@ cd atlas-template-master
 
 Pour des informations sur la façon de configurer l'application, vous pouvez aller [ici](/configuration)
 
-```console
+```bash
 vim ./data/config.yml
 ```
 
 #### Initialiser et ajouter le dépôt remote créé dans gitlab
 
-```console
+```bash
 git init
 git remote add origin [depot-remote]
 git commit -m "chore: initial commit"
@@ -36,12 +36,12 @@ git push origin main
 
 #### Démarrer le projet avec `node`
 
-```console
+```bash
 docker-compose up -d --build atlas
 ```
 
 #### ou Démarrer le protet avec `nginx`
 
-```console
+```bash
 docker-compose up -d --build atlas-nginx
 ```

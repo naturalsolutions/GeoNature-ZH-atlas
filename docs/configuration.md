@@ -1,46 +1,49 @@
-La configuration se trouve dans le dossier [`./data/config.yml`](https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/blob/1-write-docs-to-install-and-config/data/config.yml){.external-link target=\_blank} et est écrite au format [YALM][yaml]{ .external-link target=\_blank}.
-
-La configuration de l'application est divisée en deux sections principales : nous avons d'une part la configuration générale du template (**layout**), et d'autre part la configuration de la page d'accueil (**pages.home**).
-
 ## Structure du projet
 
-```console
+La configuration se trouve dans le dossier [`./data/config.yml`](https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/blob/1-write-docs-to-install-and-config/data/config.yml){.external-link target=\_blank} et est écrite au format [YALM][yaml]{ .external-link target=\_blank}.
+
+```bash
 .
-├── Dockerfile
-├── README.md
 ├── data
 │   └── config.yml
-├── mkdocs.yml
-├── next-env.d.ts
-├── next.config.js
-├── node_modules
-├── package-lock.json
-├── package.json
+├── ...
+```
+
+## Les fichiers statiques
+
+Les fichiers statiques, comme les images, se trouvent dans un dossier nommé `public` dans le répertoire racine. Les fichiers contenus dans public peuvent ensuite être référencés par votre configuration à partir de l'URL de base `/`.
+
+```bash
+.
+├── ...
 ├── public
 │   ├── favicon.ico
 │   ├── geonature.geojson
 │   └── images
 │       ├── hero.png
-│       ├── icon-fullscreen-2x.png
-│       ├── icon-fullscreen.png
-│       ├── mini.png
-│       ├── ns.png
-│       ├── partenaire.svg
-│       ├── partenaires
-│       │   ├── dreal_paca.svg
-│       │   ├── logo_sit.svg
-│       │   └── region_sud.svg
-│       ├── thumbnail_not_found.svg
 │       ├── zh.jpg
 │       ├── zh2.jpg
 │       └── zh3.jpg
-├── src
-└── tsconfig.json
+│       ├── ...
+├── ...
 ```
+
+Par exemple, si vous ajoutez une image dans `public/image.png`, la configuration suivant accédera à l'image :
+
+```yaml
+---
+pages:
+  home:
+    images:
+      - src: /image.png
+---
+```
+
+La configuration de l'application est divisée en deux sections principales : nous avons d'une part la configuration générale du template (**layout**), et d'autre part la configuration de la page d'accueil (**pages.home**).
 
 ## Configuration de la page d'accueil
 
-![image](/images/home.png)
+![image](./images/home.png)
 
 Extrait de la configuration de la page d'accueil
 
@@ -64,7 +67,7 @@ pages:
 
 ## Configuration générale du template
 
-![image](/images/footer.png)
+![image](./images/footer.png)
 
 Toutes les pages de l'application partagent des éléments communs, tels que l'en-tête et le pied de page. Les paramètres suivants sont disponibles pour l'adapter à vos besoins :
 

@@ -26,11 +26,12 @@ theme:
 markdown_extensions:
   - toc:
       permalink: true
-  - markdown.extensions.codehilite:
+  - codehilite:
       guess_lang: false
   - admonition
   - codehilite
   - extra
+  - pymdownx.highlight
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
