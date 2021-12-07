@@ -1,31 +1,8 @@
-const yaml = require('js-yaml')
 const fs = require('fs')
+const yaml = require('js-yaml')
 const axios = require('axios')
 
-let publicRuntimeConfig = {
-  pages: {
-    home: {
-      title: 'GeoNature Zone Humides · Atlas',
-      heroText: '',
-      text: [],
-      images: [],
-    },
-  },
-  layout: {
-    links: [{ title: '', href: '' }],
-    header: {
-      logo: {
-        src: '',
-        alt: '',
-      },
-    },
-    footer: {
-      images: [{ name: '', image: '' }],
-      links: [],
-      legal: [],
-    },
-  },
-}
+let publicRuntimeConfig = {}
 
 if (fs.existsSync('./data/config.yml')) {
   publicRuntimeConfig = yaml.load(fs.readFileSync('./data/config.yml', 'utf8'))
@@ -38,8 +15,10 @@ module.exports = {
     const geojsonData = fs.readFileSync('./public/geonature.geojson')
     let geojson = JSON.parse(geojsonData)
 
-    if (process.env.GEOJSON_URL) {
-      const { response, data } = await axios.get(process.env.GEOJSON_URL)
+    if (publicRuntimeConfig?.dependencies?.geojson) {
+      const { response, data } = await axios.get(
+        publicRuntimeConfig.dependencies.geojson
+      )
 
       if (response === 200) {
         geojson = data

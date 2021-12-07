@@ -51,7 +51,7 @@ Page                              Size     First Load JS
 
 </div>
 
-## Start
+## Lancer le projet
 
 <div class="termy">
 

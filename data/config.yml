@@ -1,3 +1,7 @@
+dependencies:
+  geojson: https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/raw/main/public/geonature.geojson
+  pdf: https://www.pdf.com
+
 pages:
   home:
     title: Bienvenue sur l'atlas des zones humides de Provence-Alpes-Côte d’Azur

@@ -98,6 +98,8 @@ layout:
 
 ##### Links
 
+Il est possible d'ajouter des liens d'intérêt vers d'autres sites.
+
 | Propiedad | Descripción                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | title     | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
@@ -115,6 +117,8 @@ layout:
 ```
 
 ##### Images
+
+Images des partenaires
 
 | Propiedad | Descripción                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
@@ -139,16 +143,45 @@ layout:
 
 ![image](./images/home.png)
 
-Extrait de la configuration de la page d'accueil
+##### Title
+
+Titre de la page d'accueil
 
 ```yaml
 ---
 pages:
   home:
     title: Bienvenue sur l'atlas des zones humides de Provence-Alpes-Côte d’Azur
+---
+```
+
+##### Text
+
+Description de la page d'accueil
+
+```yaml
+---
+pages:
+  home:
     text:
       - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sed porta est, et fermentum ipsum. Pellentesque dictum augue sit amet neque ultricies condimentum. Etiam fringilla est aliquam lacus interdum, et commodo purus dapibus. Sed in fringilla orci, in egestas felis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Duis sit amet aliquam dolor, sit amet tincidunt ipsum. Aliquam eget nunc dui. Nullam eget feugiat metus, et volutpat odio. Donec et libero vitae nisl pellentesque consequat. Morbi a mauris massa. Maecenas lobortis vehicula massa, a posuere libero imperdiet et. Integer vitae turpis ultrices, tincidunt neque at, aliquet augue. Nam non enim malesuada, pharetra nibh ut, maximus odio.
       - Morbi id metus mattis, condimentum est eu, tincidunt ante. Sed placerat vestibulum velit, vel imperdiet risus tempor vitae. Donec sit amet metus eros. Maecenas diam urna, venenatis vitae purus sit amet, dapibus tristique est. In tincidunt augue eget pharetra pulvinar. Etiam consectetur ligula ac gravida aliquam. Vivamus enim massa, tincidunt at justo id, iaculis commodo purus.
+---
+```
+
+##### Images
+
+Images de la page d'accueil
+
+| Propiedad | Descripción                                                                                                                     |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
+| src       | Est obligatoire et contient le chemin de l'image qu'on souhaite afficher.                                                       |
+
+```yaml
+---
+pages:
+  home:
     images:
       - src: /images/zh.jpg
         alt: zone humide 1
@@ -159,9 +192,37 @@ pages:
 ---
 ```
 
+### Dependencies
+
+##### Geojson
+
+URL du module GeoNature sur les zones humides contenant le GeoJSON avec les zones humides.
+
+```yaml
+---
+dependencies:
+  geojson: https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/raw/main/public/geonature.geojson
+---
+```
+
+##### PDF
+
+URL de base du module GeoNature wetlands contenant le PDF à générer
+
+```yaml
+---
+dependencies:
+  pdf: https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/raw/main/public/pdf
+---
+```
+
 ## Exemple complet de configuration
 
 ```yaml
+dependencies:
+  geojson: https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/raw/main/public/geonature.geojson
+  pdf: https://www.pdf.com
+
 pages:
   home:
     title: Bienvenue sur l'atlas des zones humides de Provence-Alpes-Côte d’Azur
