@@ -39,9 +39,11 @@ pages:
 ---
 ```
 
+## Fichier du configuration
+
 La configuration de l'application est divisée en deux sections principales : nous avons d'une part la configuration générale du template (**layout**), et d'autre part la configuration de la page d'accueil (**pages.home**).
 
-## Configuration de la page d'accueil
+### Configuration de la page d'accueil
 
 ![image](./images/home.png)
 
@@ -65,7 +67,7 @@ pages:
 ---
 ```
 
-## Configuration générale du template
+### Configuration générale du template
 
 ![image](./images/footer.png)
 

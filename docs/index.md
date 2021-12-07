@@ -1,4 +1,4 @@
-# Docs | GeoNature Zone Humide Atlas
+# GeoNature Zone Humide Atlas
 
 Bienvenue sur la documentation du projet **GeoNature Zone Humide Atlas**
 
@@ -20,3 +20,9 @@ Cette suite d'outils permettant la gestion des zones humides d'un territoire a Ã
 [doc]: https://natural-solutions.gitlab.io/geonature/zones-humides/atlas
 [geonature]: https://geonature.fr
 [git_gn_module_zh]: https://github.com/PnX-SI/gn_module_ZH
+
+## Partenaires
+
+![DREAL PACA](./images/partenaires/dreal_paca.svg){width=100}
+![SIT](./images/partenaires/logo_sit.svg){width=100}
+![Region Sud](./images/partenaires/region_sud.svg){width=100}
