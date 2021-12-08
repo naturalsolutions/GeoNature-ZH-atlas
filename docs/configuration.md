@@ -55,7 +55,7 @@ Dans l'en-tête, nous pouvons configurer :
 
 ##### Logo
 
-| Propiedad | Descripción                                                                                                                     |
+| Propriété | Description                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
 | src       | Est obligatoire et contient le chemin de l'image qu'on souhaite afficher.                                                       |
@@ -100,7 +100,7 @@ layout:
 
 Il est possible d'ajouter des liens d'intérêt vers d'autres sites.
 
-| Propiedad | Descripción                                                                                                                     |
+| Propriété | Description                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | title     | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
 | href      | L'URL vers laquelle pointe l'hyperlien                                                                                          |
@@ -120,7 +120,7 @@ layout:
 
 Images des partenaires
 
-| Propiedad | Descripción                                                                                                                     |
+| Propriété | Description                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
 | src       | Est obligatoire et contient le chemin de l'image qu'on souhaite afficher.                                                       |
@@ -173,7 +173,7 @@ pages:
 
 Images de la page d'accueil
 
-| Propiedad | Descripción                                                                                                                     |
+| Propriété | Description                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
 | src       | Est obligatoire et contient le chemin de l'image qu'on souhaite afficher.                                                       |
@@ -192,7 +192,7 @@ pages:
 ---
 ```
 
-### Dependencies
+### Dépendances
 
 ##### Geojson
 
@@ -207,7 +207,7 @@ dependencies:
 
 ##### PDF
 
-URL de base du module GeoNature wetlands contenant le PDF à générer
+URL de base du module GeoNature Zone Humides contenant le PDF à générer
 
 ```yaml
 ---

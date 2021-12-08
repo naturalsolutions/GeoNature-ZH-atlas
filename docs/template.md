@@ -12,7 +12,7 @@ Si vous souhaitez utiliser le template comme point de départ, veuillez suivre l
 
 #### Prérequis
 
-Pour pouvoir utiliser la template, vous devez avoir installé [Docker](https://docs.docker.com/engine/install/){.external-link target=\_blank} et [Docker Compose](https://docs.docker.com/compose/install/){.external-link target=\_blank} sur votre système.
+Pour pouvoir utiliser le template, vous devez avoir installé [Docker](https://docs.docker.com/engine/install/){.external-link target=\_blank} et [Docker Compose](https://docs.docker.com/compose/install/){.external-link target=\_blank} sur votre système.
 
 #### Téléchargez et extrayez le dossier contenant tous les fichiers
 
@@ -21,7 +21,7 @@ curl https://gitlab.com/natural-solutions/geonature/zones-humides/atlas-template
 cd atlas-template-master
 ```
 
-#### Modifier la configuracion
+#### Modifier la configuration
 
 Pour des informations sur la façon de configurer l'application, vous pouvez aller [ici](/configuration)
 
@@ -44,7 +44,7 @@ git push origin main
 docker-compose up -d --build atlas
 ```
 
-#### ou Démarrer le protet avec `nginx`
+#### ou Démarrer le projet avec `nginx`
 
 ```bash
 docker-compose up -d --build atlas-nginx
