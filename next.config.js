@@ -1,37 +1,30 @@
-const yaml = require('js-yaml')
 const fs = require('fs')
+const yaml = require('js-yaml')
 const axios = require('axios')
 
-if (!process.env.GEOJSON_URL) {
-  throw new Error('GEOJSON_URL is mandatory')
-}
+let publicRuntimeConfig = {}
 
-let publicRuntimeConfig = {
-  pages: {
-    home: {
-      title: '',
-      heroText: '',
-    },
-  },
-  layout: {
-    links: [{ title: '', href: '' }],
-    footer: {
-      images: [{ name: '', image: '' }],
-    },
-  },
-}
-
-try {
+if (fs.existsSync('./data/config.yml')) {
   publicRuntimeConfig = yaml.load(fs.readFileSync('./data/config.yml', 'utf8'))
-} catch (e) {
-  console.log(e)
 }
 
 module.exports = {
   publicRuntimeConfig,
   trailingSlash: true,
   exportPathMap: async function () {
-    const { data: geojson } = await axios.get(process.env.GEOJSON_URL)
+    const geojsonData = fs.readFileSync('./public/geonature.geojson')
+    let geojson = JSON.parse(geojsonData)
+
+    if (publicRuntimeConfig?.dependencies?.geojson) {
+      const { response, data } = await axios.get(
+        publicRuntimeConfig.dependencies.geojson
+      )
+
+      if (response === 200) {
+        geojson = data
+      }
+    }
+
     const routes = geojson.features.reduce((acc, value) => {
       acc[`/map/${value.properties.slug}`] = {
         page: '/map/[slug]',

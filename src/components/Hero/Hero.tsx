@@ -92,8 +92,8 @@ const Hero: FC = () => {
                     height: '100%',
                     objectFit: 'cover',
                   }}
-                  src={step.imgPath}
-                  alt={step.label}
+                  src={step.src}
+                  alt={step.alt}
                 />
               ) : null}
             </div>
