@@ -28,7 +28,7 @@ Les fichiers statiques, comme les images, se trouvent dans un dossier nommé `pu
 ├── ...
 ```
 
-Par exemple, si vous ajoutez une image dans `public/image.png`, la configuration suivant accédera à l'image :
+Par exemple, si vous ajoutez une image dans `public/image.png`, la configuration suivante accédera à l'image :
 
 ```yaml
 ---
@@ -57,7 +57,7 @@ Dans l'en-tête, nous pouvons configurer :
 
 | Propriété | Description                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
+| alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est très utile pour l'accessibilité           |
 | src       | Est obligatoire et contient le chemin de l'image qu'on souhaite afficher.                                                       |
 
 ```yaml
@@ -102,7 +102,7 @@ Il est possible d'ajouter des liens d'intérêt vers d'autres sites.
 
 | Propriété | Description                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| title     | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
+| title     | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est très utile pour l'accessibilité           |
 | href      | L'URL vers laquelle pointe l'hyperlien                                                                                          |
 
 ```yaml
@@ -122,7 +122,7 @@ Images des partenaires
 
 | Propriété | Description                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
+| alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est très utile pour l'accessibilité           |
 | src       | Est obligatoire et contient le chemin de l'image qu'on souhaite afficher.                                                       |
 
 ```yaml
@@ -175,7 +175,7 @@ Images de la page d'accueil
 
 | Propriété | Description                                                                                                                     |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est incroyablement utile pour l'accessibilité |
+| alt       | Contient une description textuelle de l'image, qui n'est pas obligatoire mais qui est très utile pour l'accessibilité           |
 | src       | Est obligatoire et contient le chemin de l'image qu'on souhaite afficher.                                                       |
 
 ```yaml
