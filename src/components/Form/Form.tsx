@@ -1,10 +1,13 @@
 import { Button, Paper, Stack, TextField, Typography } from '@material-ui/core'
 import { useRouter } from 'next/dist/client/router'
+import getConfig from 'next/config'
 import { FC, useContext } from 'react'
 import { AppContext } from '../AppContext'
 import { ZoneHumide } from '../../index'
 import Images from '../Images'
 import FormItem from './Item'
+
+const { publicRuntimeConfig } = getConfig()
 
 const images = [
   {
@@ -40,7 +43,7 @@ const Form: FC = () => {
           <Button variant="outlined" onClick={handleOnBack} fullWidth>
             Retour
           </Button>
-          <Button variant="outlined" onClick={handleOnBack} fullWidth>
+          <Button variant="outlined" href={`${publicRuntimeConfig?.dependencies?.pdf}/${zoneHumide.id}`} target="_blank" fullWidth>
             Télécharger fiche de synthèse
           </Button>
         </Stack>

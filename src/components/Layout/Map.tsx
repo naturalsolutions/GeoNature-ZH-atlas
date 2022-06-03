@@ -52,7 +52,7 @@ const useStyles = makeStyles<Theme, MapStyleProps>((theme) => ({
       paddingTop: 62,
     },
     aside: {
-      width: 600,
+      width: 700,
     },
     fab: {
       display: 'none',

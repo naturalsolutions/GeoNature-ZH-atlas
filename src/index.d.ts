@@ -4,6 +4,7 @@ export interface Image {
 }
 
 export interface ZoneHumide {
+  id: number
   nom: string
   slug: string
   code: string
