@@ -16,5 +16,4 @@ const MapPage: NextPage = () => {
   )
 }
 
-
 export default MapPage

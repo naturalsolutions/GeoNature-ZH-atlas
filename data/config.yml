@@ -1,7 +1,7 @@
 dependencies:
   geojson: http://localhost:8000/zones_humides/geojson
   pdf: http://localhost:8000/zones_humides/export_pdf
-  pbf: http://localhost:8000/zones_humides/pbf
+  pbf: http://localhost:8000/zones_humides/pbf/complete
 
 pages:
   home:

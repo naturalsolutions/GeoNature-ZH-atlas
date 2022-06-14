@@ -136,8 +136,8 @@ const Search: FC = () => {
                 Bassin versant
               </MenuItem>
               <MenuItem value="all">Tous</MenuItem>
-              {values.bassin_versant.map((bassin_versant) => (
-                <MenuItem key={bassin_versant} value={bassin_versant}>
+              {values.bassin_versant.map((bassin_versant, i) => (
+                <MenuItem key={i} value={bassin_versant}>
                   {bassin_versant}
                 </MenuItem>
               ))}
@@ -198,7 +198,10 @@ const Search: FC = () => {
         <Stack sx={{ p: '2px' }} spacing={2}>
           <Typography>{results.features.length} zones humides</Typography>
           {results.features.map((result) => (
-            <Item key={result.id} value={result.properties as ZoneHumide} />
+            <Item
+              key={result.properties.id}
+              value={result.properties as ZoneHumide}
+            />
           ))}
         </Stack>
       </Stack>

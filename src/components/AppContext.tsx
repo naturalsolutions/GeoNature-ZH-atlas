@@ -1,6 +1,13 @@
 import { createContext, FC, useEffect, useState } from 'react'
 import { FeatureCollection, Feature } from 'geojson'
 import { useRouter } from 'next/dist/client/router'
+import getConfig from 'next/config'
+import axios from 'axios'
+import { pbfToGeojson } from '../lib/utils'
+
+const {
+  publicRuntimeConfig: { pbf: pbfURL },
+} = getConfig()
 
 export type Filter = Record<string, string>
 
@@ -62,11 +69,12 @@ const AppContextProvider: FC = ({ children }) => {
     let newGeojson = {} as FeatureCollection
 
     try {
-      const data = await fetch('/geonature.geojson')
-
-      newGeojson = await data.json()
+      const { data } = await axios.get('/geonature.pbf', {
+        responseType: 'arraybuffer',
+      })
+      newGeojson = pbfToGeojson(data)
       setGeoJSON(newGeojson)
-      setResults(newGeojson)
+      //setResults(newGeojson)
     } catch (e) {
     } finally {
       setIsLoading(false)
