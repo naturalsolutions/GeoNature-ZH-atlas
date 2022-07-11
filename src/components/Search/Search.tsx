@@ -9,7 +9,12 @@ import {
   Box,
   Typography,
   Theme,
+  LinearProgress,
 } from '@material-ui/core'
+import InfiniteScroll from 'react-infinite-scroller'
+import useInfiniteScroll from 'react-infinite-scroll-hook'
+import { Geometry, Feature, GeoJsonProperties } from 'geojson'
+import { useLoadItems } from '../../lib/loadItems'
 import Item from './Item'
 import { FC, useState, useContext, useEffect } from 'react'
 import { AppContext } from '../AppContext'
@@ -51,20 +56,58 @@ const initValues = {
   communes: [],
 }
 
+interface SearchResultsProps {
+  allItems: any
+}
+
+const SearchResults: FC<SearchResultsProps> = ({ allItems }) => {
+  const { loading, items, hasNextPage, error, loadMore } =
+    useLoadItems(allItems)
+  const [itemRef, { rootRef }] = useInfiniteScroll({
+    loading,
+    hasNextPage,
+    onLoadMore: loadMore,
+    // When there is an error, we stop infinite loading.
+    // It can be reactivated by setting "error" state as undefined.
+    disabled: !!error,
+    // `rootMargin` is passed to `IntersectionObserver`.
+    // We can use it to trigger 'onLoadMore' when the sentry comes near to become
+    // visible, instead of becoming fully visible on the screen.
+    rootMargin: '0px 0px 40px 0px',
+  })
+
+  return (
+    <Stack sx={{ p: '2px' }} spacing={2} ref={rootRef}>
+      <Typography>{allItems.length} zones humides</Typography>
+      {items.map((result) => (
+        <Item
+          key={result.properties.id}
+          value={result.properties as ZoneHumide}
+        />
+      ))}
+      {(loading || hasNextPage) && <div ref={itemRef}>loading2...</div>}
+    </Stack>
+  )
+}
+
 const Search: FC = () => {
   const classes = useStyles()
   const { results, geoJSON, filter, setFilter, setResults } =
     useContext(AppContext)
   const [values, setValues] = useState<Values>(initValues)
-
-  const handleFilters = (e, property) => {
-    const newFilter = {
-      ...filter,
-      [property]: e.target.value,
-    }
-
-    setFilter(newFilter)
-  }
+  const { loading, items, hasNextPage, error, loadMore } = useLoadItems(results)
+  const [itemRef, { rootRef }] = useInfiniteScroll({
+    loading,
+    hasNextPage,
+    onLoadMore: loadMore,
+    // When there is an error, we stop infinite loading.
+    // It can be reactivated by setting "error" state as undefined.
+    disabled: !!error,
+    // `rootMargin` is passed to `IntersectionObserver`.
+    // We can use it to trigger 'onLoadMore' when the sentry comes near to become
+    // visible, instead of becoming fully visible on the screen.
+    rootMargin: '0px 0px 100px 0px',
+  })
 
   useEffect(() => {
     const newValues = initValues
@@ -84,7 +127,29 @@ const Search: FC = () => {
   }, [geoJSON])
 
   useEffect(() => {
+    console.log('Search.tsx, search')
     let newResults = { ...geoJSON }
+    let match = null
+    // if (idx && filter.nom) {
+    //   match = idx.search(`nom:${filter.nom}`)
+    //   filterIds(newResults, match)
+    // }
+    // if (filter.bassin_versant && filter.bassin_versant !== 'all') {
+    //   match = idx.search(`bassin_versant:${filter.bassin_versant}`)
+    //   filterIds(newResults, match)
+    // }
+
+    // if (filter.communes && filter.communes !== 'all') {
+    //   match = idx.search(`communes:${filter.communes}`)
+    //   filterIds(newResults, match)
+    // }
+
+    // if (filter.type && filter.type !== 'all') {
+    //   match = idx.search(`type:${filter.type}`)
+    //   filterIds(newResults, match)
+    // }
+
+    // let newResults = { ...geoJSON }
 
     if (filter.nom) {
       newResults.features = newResults.features.filter((f) => {
@@ -111,7 +176,32 @@ const Search: FC = () => {
     }
 
     setResults(newResults)
-  }, [filter, geoJSON, setResults])
+  }, [filter, setResults])
+
+  const handleFilters = (e, property) => {
+    const newFilter = {
+      ...filter,
+      [property]: e.target.value,
+    }
+    setFilter(newFilter)
+  }
+
+  // const handleLoadMore = (page) => {
+  //   if (this.state.isLoading) {
+  //     return null
+  //   }
+  //   console.log('yolo', page)
+  //   const nbItems = 25
+  //   console.log('slice', page * nbItems, (page + 1) * nbItems)
+  //   return results.features
+  //     .slice(page * nbItems, (page + 1) * nbItems)
+  //     .map((result) => (
+  //       <Item
+  //         key={result.properties.id}
+  //         value={result.properties as ZoneHumide}
+  //       />
+  //     ))
+  // }
 
   return (
     <Box className={classes.root}>
@@ -195,15 +285,19 @@ const Search: FC = () => {
             </Select>
           </FormControl>
         </Stack>
-        <Stack sx={{ p: '2px' }} spacing={2}>
-          <Typography>{results.features.length} zones humides</Typography>
-          {results.features.map((result) => (
-            <Item
-              key={result.properties.id}
-              value={result.properties as ZoneHumide}
-            />
-          ))}
-        </Stack>
+        {/* <SearchResults allItems={results.features} /> */}
+        {results.features && (
+          <Stack sx={{ p: '2px' }} spacing={2} ref={rootRef}>
+            <Typography>{results.features.length} zones humides</Typography>
+            {items.map((result) => (
+              <Item
+                key={result.properties.id}
+                value={result.properties as ZoneHumide}
+              />
+            ))}
+            {(loading || hasNextPage) && <div ref={itemRef}>loading2...</div>}
+          </Stack>
+        )}
       </Stack>
     </Box>
   )

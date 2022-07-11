@@ -74,7 +74,7 @@ const AppContextProvider: FC = ({ children }) => {
       })
       newGeojson = pbfToGeojson(data)
       setGeoJSON(newGeojson)
-      //setResults(newGeojson)
+      setResults(newGeojson)
     } catch (e) {
     } finally {
       setIsLoading(false)
