@@ -16,7 +16,7 @@ const fetchPBF = async (url) => {
   })
 }
 
-const main = async () => {
+const downloadPbf = async () => {
   let existsPBF = false
 
   try {
@@ -34,12 +34,11 @@ const main = async () => {
   }
 }
 
-main()
-
 module.exports = {
   publicRuntimeConfig,
   trailingSlash: true,
   exportPathMap: async function () {
+    await downloadPbf()
     const pbfData = fs.readFileSync('./public/geonature.pbf')
     const pbf = new Pbf(pbfData)
     const geojson = geobuf.decode(pbf)
@@ -51,7 +50,7 @@ module.exports = {
         ...f,
         properties: {
           ...properties,
-          ...JSON.parse(json_arrays),
+          ...JSON.parse(json_arrays || '{}'),
         },
       }
     })
