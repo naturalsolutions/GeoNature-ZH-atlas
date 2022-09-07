@@ -1,5 +1,5 @@
 dependencies:
-  geojson: http://localhost:8000/zones_humides/geojson
+  apiurl: http://localhost:8000/zones_humides/
   pdf: http://localhost:8000/zones_humides/export_pdf
   pbf: http://localhost:8000/zones_humides/pbf/complete
 
