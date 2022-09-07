@@ -1,37 +1,36 @@
-import { Button, Paper, Stack, TextField, Typography } from '@material-ui/core'
+import { Button, Paper, Stack, Typography } from '@material-ui/core'
 import { useRouter } from 'next/dist/client/router'
 import getConfig from 'next/config'
-import { FC, useContext } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import { AppContext } from '../AppContext'
 import { ZoneHumide } from '../../index'
 import Images from '../Images'
 import FormItem from './Item'
+import axios from 'axios'
 
 const { publicRuntimeConfig } = getConfig()
-
-const images = [
-  {
-    label: 'ZH',
-    imgPath: '/images/zh.jpg',
-  },
-  {
-    label: 'ZH 1',
-    imgPath: '/images/zh2.jpg',
-  },
-  {
-    label: 'ZH 2',
-    imgPath: '/images/zh3.jpg',
-  },
-]
 
 const Form: FC = () => {
   const router = useRouter()
   const { feature } = useContext(AppContext)
+  const [images, setImages] = useState([])
   const zoneHumide = feature.properties as ZoneHumide
 
+  const fetchAndSetImages = async (id) => {
+    const { data } = await axios.get(
+      `${publicRuntimeConfig?.dependencies?.apiurl}/${id}/photos`
+    )
+    return setImages(data)
+  }
   const handleOnBack = () => {
     router.push('/map')
   }
+
+  useEffect(() => {
+    if (feature.properties.id) {
+      fetchAndSetImages(feature.properties.id)
+    }
+  }, [feature.properties.id])
 
   return (
     <Paper
@@ -43,7 +42,12 @@ const Form: FC = () => {
           <Button variant="outlined" onClick={handleOnBack} fullWidth>
             Retour
           </Button>
-          <Button variant="outlined" href={`${publicRuntimeConfig?.dependencies?.pdf}/${zoneHumide.id}`} target="_blank" fullWidth>
+          <Button
+            variant="outlined"
+            href={`${publicRuntimeConfig?.dependencies?.pdf}/${zoneHumide.id}`}
+            target="_blank"
+            fullWidth
+          >
             Télécharger fiche de synthèse
           </Button>
         </Stack>

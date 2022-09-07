@@ -36,7 +36,7 @@ const Images: FC<ImagesProps> = ({ images = [] }) => {
         enableMouseEvents
       >
         {images.map((step, index) => (
-          <div key={step.label}>
+          <div key={step.url}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
@@ -45,7 +45,7 @@ const Images: FC<ImagesProps> = ({ images = [] }) => {
                   overflow: 'hidden',
                   width: '100%',
                 }}
-                src={step.imgPath}
+                src={step.url}
                 alt={step.label}
               />
             ) : null}

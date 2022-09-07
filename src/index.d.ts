@@ -1,6 +1,6 @@
 export interface Image {
   label: string
-  imgPath: string
+  url: string
 }
 
 export interface ZoneHumide {
