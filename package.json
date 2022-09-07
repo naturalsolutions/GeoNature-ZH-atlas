@@ -28,6 +28,7 @@
     "pbf": "^3.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-infinite-scroller": "^1.2.6",
     "react-leaflet": "^3.2.0",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",

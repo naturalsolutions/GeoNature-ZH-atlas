@@ -46,7 +46,7 @@ const initialContext: Context = {
     nom: '',
     type: '',
     bassin_versant: '',
-    communes: '',
+    communes: 'all',
   },
   setResults: () => {},
   setFilter: () => {},

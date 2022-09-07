@@ -26,7 +26,6 @@ const useStyles = makeStyles<Theme, MapStyleProps>((theme) => ({
   aside: {
     width: '100%',
     height: '100%',
-    overflowY: 'auto',
     display: (props) => (props.hidden ? 'none' : 'block'),
   },
   fab: {
