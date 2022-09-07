@@ -11,17 +11,19 @@ import {
   Theme,
 } from '@material-ui/core'
 import Item from './Item'
-import { FC, useState, useContext, useEffect } from 'react'
+import { FC, useState, useContext, useEffect, useRef } from 'react'
 import { AppContext } from '../AppContext'
 import { ZoneHumide } from '../..'
 import { TYPES, TYPES_COLORS } from '../../constants'
+import InfiniteScroll from 'react-infinite-scroller'
+import InfiniteSelect from '@components/InfiniteSelect'
 
 const types = Object.values(TYPES)
 
 const useStyles = makeStyles<Theme>((theme) => ({
   root: {
     width: '100%',
-    padding: '1rem .5rem',
+    height: '100%',
   },
 }))
 
@@ -38,17 +40,17 @@ export interface Values {
   communes: string[]
 }
 
-const initFilter = {
-  nom: '',
-  type: '',
-  bassin_versant: '',
-  communes: '',
-}
-
 const initValues = {
   type: [],
   bassin_versant: [],
   communes: [],
+}
+
+const initPaginationValues = {
+  page: -1,
+  items: [],
+  hasMore: true,
+  itemsPerPage: 20,
 }
 
 const Search: FC = () => {
@@ -56,11 +58,13 @@ const Search: FC = () => {
   const { results, geoJSON, filter, setFilter, setResults } =
     useContext(AppContext)
   const [values, setValues] = useState<Values>(initValues)
+  const [pagination, setPagination] = useState(initPaginationValues)
+  const scrollParentRef = useRef(null)
 
-  const handleFilters = (e, property) => {
+  const handleFilters = (value, property) => {
     const newFilter = {
       ...filter,
-      [property]: e.target.value,
+      [property]: value,
     }
 
     setFilter(newFilter)
@@ -84,11 +88,17 @@ const Search: FC = () => {
   }, [geoJSON])
 
   useEffect(() => {
+    handleLoadMore(0)
+  }, [results])
+
+  useEffect(() => {
     let newResults = { ...geoJSON }
 
     if (filter.nom) {
       newResults.features = newResults.features.filter((f) => {
-        return f.properties.nom.includes(filter.nom)
+        return f.properties.nom
+          ?.toLowerCase()
+          .includes(filter.nom?.toLowerCase())
       })
     }
 
@@ -113,15 +123,45 @@ const Search: FC = () => {
     setResults(newResults)
   }, [filter, geoJSON, setResults])
 
+  const handleLoadMore = (page) => {
+    if (!results.features.length) {
+      return setPagination({
+        ...initPaginationValues,
+        hasMore: false,
+      })
+    }
+
+    if (page > 0 && !pagination.hasMore) {
+      return
+    }
+
+    const nextPage = page + 1
+    const items = [
+      ...(page > 0 ? pagination.items : []),
+      ...results.features.slice(
+        page * pagination.itemsPerPage,
+        nextPage * pagination.itemsPerPage
+      ),
+    ]
+    const hasMore = items.length < results.features.length
+
+    setPagination({
+      ...pagination,
+      hasMore,
+      items,
+    })
+  }
+
   return (
     <Box className={classes.root}>
       <Stack
-        sx={{ width: '100%', height: '100%', overflow: 'auto' }}
+        ref={scrollParentRef}
+        sx={{ width: '100%', height: '100%', overflow: 'auto', p: 2 }}
         spacing={1}
       >
         <TextField
           value={filter.nom}
-          onChange={(e) => handleFilters(e, 'nom')}
+          onChange={(e) => handleFilters(e.target.value, 'nom')}
           label="Chercher une ZH"
           fullWidth
         />
@@ -130,7 +170,7 @@ const Search: FC = () => {
             <InputLabel>Bassin versant</InputLabel>
             <Select
               value={filter.bassin_versant}
-              onChange={(e) => handleFilters(e, 'bassin_versant')}
+              onChange={(e) => handleFilters(e.target.value, 'bassin_versant')}
             >
               <MenuItem disabled value="all">
                 Bassin versant
@@ -143,28 +183,22 @@ const Search: FC = () => {
               ))}
             </Select>
           </FormControl>
-          <FormControl fullWidth>
-            <InputLabel>Commune(s)</InputLabel>
-            <Select
-              value={filter.communes}
-              onChange={(e) => handleFilters(e, 'communes')}
-            >
-              <MenuItem disabled value="all">
-                Commune
-              </MenuItem>
-              <MenuItem value="all">Toutes</MenuItem>
-              {values.communes.map((communes) => (
-                <MenuItem key={communes} value={communes}>
-                  {communes}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <InfiniteSelect
+            allText="Commune"
+            title="Commune(s)"
+            value={filter.communes ?? 'all'}
+            values={values.communes}
+            onChange={(value) => {
+              if (value) {
+                return handleFilters(value, 'communes')
+              }
+            }}
+          />
           <FormControl fullWidth>
             <InputLabel>Type de zone</InputLabel>
             <Select
               value={filter.type}
-              onChange={(e) => handleFilters(e, 'type')}
+              onChange={(e) => handleFilters(e.target.value, 'type')}
             >
               <MenuItem disabled value="all">
                 Type de zone
@@ -197,12 +231,25 @@ const Search: FC = () => {
         </Stack>
         <Stack sx={{ p: '2px' }} spacing={2}>
           <Typography>{results.features.length} zones humides</Typography>
-          {results.features.map((result) => (
-            <Item
-              key={result.properties.id}
-              value={result.properties as ZoneHumide}
-            />
-          ))}
+          <InfiniteScroll
+            pageStart={pagination.page}
+            hasMore={pagination.hasMore}
+            loadMore={handleLoadMore}
+            getScrollParent={() => scrollParentRef.current}
+            loader={
+              <div className="loader" key={0}>
+                Loading ...
+              </div>
+            }
+            useWindow={false}
+          >
+            {pagination.items.map((result) => (
+              <Item
+                key={result.properties.id}
+                value={result.properties as ZoneHumide}
+              />
+            ))}
+          </InfiniteScroll>
         </Stack>
       </Stack>
     </Box>
