@@ -11,6 +11,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 interface InfiniteSelectProps {
   title: string
   allText: string
+  allTextTitle: string
   value: string
   values: string[]
   onChange?(value: string): void
@@ -25,6 +26,8 @@ const initPaginationValues = {
 
 // FIXME: recreate all component from scratch
 const InfiniteSelect: FC<InfiniteSelectProps> = ({
+  allText,
+  allTextTitle,
   title,
   value,
   values,
@@ -77,7 +80,8 @@ const InfiniteSelect: FC<InfiniteSelectProps> = ({
     <FormControl fullWidth>
       <InputLabel>{title}</InputLabel>
       <Select
-        renderValue={() => <div>{value === 'all' ? 'Communes' : value}</div>}
+        label={title}
+        renderValue={() => <div>{value === 'all' ? allTextTitle : value}</div>}
         value={value}
         onOpen={handleClick}
         onClose={handleClose}
@@ -95,8 +99,8 @@ const InfiniteSelect: FC<InfiniteSelectProps> = ({
             }
             useWindow={false}
           >
-            <MenuItem disabled value="all">
-              Communes
+            <MenuItem disabled value="">
+              {title}
             </MenuItem>
             <MenuItem
               value="all"
@@ -105,7 +109,7 @@ const InfiniteSelect: FC<InfiniteSelectProps> = ({
                 handleClose()
               }}
             >
-              Toutes
+              {allTextTitle}
             </MenuItem>
             {pagination.items.map((item) => (
               <MenuItem
