@@ -27,6 +27,7 @@ layout:
     legal:
       - Financé par l’Etat, l’Agence de l’eau Rhône Méditerranée Corse, la Région Provence-Alpes-Côte d’Azur et les Parcs naturels régionaux de Camargue, du Luberon, du Queyras, du Verdon et de la Sainte Baume.
       - Réalisé en partenariat technique avec le Parc National des Ecrins et le Conservatoire des Espaces Naturels
+    hero: 
     images:
       - src: '/images/partenaires/dreal_paca.svg'
         alt: 'DREAL PACA'

@@ -44,8 +44,8 @@ const initialContext: Context = {
   },
   filter: {
     nom: '',
-    type: '',
-    bassin_versant: '',
+    type: 'all',
+    bassin_versant: 'all',
     communes: 'all',
   },
   setResults: () => {},

@@ -32,6 +32,9 @@ const Footer: FC = () => {
   return (
     <Box className={classes.root}>
       <Container>
+        {publicRuntimeConfig?.layout?.footer?.hero && (
+          <img src={publicRuntimeConfig?.layout?.footer?.hero} />
+        )}
         <Grid container spacing={4}>
           <Grid item xs={12} sm={3}>
             <Stack

@@ -166,25 +166,21 @@ const Search: FC = () => {
           fullWidth
         />
         <Stack direction="row" spacing={1}>
-          <FormControl fullWidth>
-            <InputLabel>Bassin versant</InputLabel>
-            <Select
-              value={filter.bassin_versant}
-              onChange={(e) => handleFilters(e.target.value, 'bassin_versant')}
-            >
-              <MenuItem disabled value="all">
-                Bassin versant
-              </MenuItem>
-              <MenuItem value="all">Tous</MenuItem>
-              {values.bassin_versant.map((bassin_versant, i) => (
-                <MenuItem key={i} value={bassin_versant}>
-                  {bassin_versant}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <InfiniteSelect
+            allText="Bassin versant"
+            allTextTitle="Tous"
+            title="Bassin(s) versant(s)"
+            value={filter.bassin_versant ?? 'all'}
+            values={values.bassin_versant}
+            onChange={(value) => {
+              if (value) {
+                return handleFilters(value, 'bassin_versant')
+              }
+            }}
+          />
           <InfiniteSelect
             allText="Commune"
+            allTextTitle="Toutes"
             title="Commune(s)"
             value={filter.communes ?? 'all'}
             values={values.communes}
@@ -195,8 +191,9 @@ const Search: FC = () => {
             }}
           />
           <FormControl fullWidth>
-            <InputLabel>Type de zone</InputLabel>
+            <InputLabel>Type(s) de zone</InputLabel>
             <Select
+              label="Type(s) de zone"
               value={filter.type}
               onChange={(e) => handleFilters(e.target.value, 'type')}
             >
