@@ -73,6 +73,7 @@ const Map: FC = () => {
               attribution={tileLayer.attribution}
               url={tileLayer.url}
               subdomains={tileLayer.subdomains}
+              maxNativeZoom={tileLayer.options?.maxNativeZoom ?? 19}
             />
           </LayersControl.BaseLayer>
         ))}
