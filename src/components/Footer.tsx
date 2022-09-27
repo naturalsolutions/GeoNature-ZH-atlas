@@ -14,7 +14,7 @@ const { publicRuntimeConfig } = getConfig()
 
 const useStyles = makeStyles({
   root: {
-    background: '#384145',
+    background: '#38414582',
     color: '#fff',
     padding: '75px 0',
   },
@@ -33,7 +33,11 @@ const Footer: FC = () => {
     <Box className={classes.root}>
       <Container>
         {publicRuntimeConfig?.layout?.footer?.hero && (
-          <img src={publicRuntimeConfig?.layout?.footer?.hero} />
+          <img
+            style={{ width: '100%' }}
+            alt={publicRuntimeConfig?.layout?.footer?.hero?.alt}
+            src={publicRuntimeConfig?.layout?.footer?.hero?.src}
+          />
         )}
         <Grid container spacing={4}>
           <Grid item xs={12} sm={3}>

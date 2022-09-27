@@ -49,7 +49,7 @@ const Logo: FC = () => {
         />
       )}
       <Typography className={classes.subtitle} color="primary">
-        zones humides
+        Zones humides
       </Typography>
     </Stack>
   )
