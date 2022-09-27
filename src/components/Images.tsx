@@ -14,7 +14,7 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
 
 const Images: FC<ImagesProps> = ({ images = [] }) => {
   const [activeStep, setActiveStep] = useState(0)
-  const maxSteps = images.length
+  const maxSteps = images?.length
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1)
@@ -28,14 +28,14 @@ const Images: FC<ImagesProps> = ({ images = [] }) => {
     setActiveStep(step)
   }
 
-  return (
+  return images ?? (
     <Box>
       <AutoPlaySwipeableViews
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {images.map((step, index) => (
+        {images?.map((step, index) => (
           <div key={step.url}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box

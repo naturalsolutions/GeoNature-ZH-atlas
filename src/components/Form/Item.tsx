@@ -10,8 +10,8 @@ export interface FormItemProps {
 const FormItem: FC<FormItemProps> = ({ label, value }) => {
   return (
     <Stack>
-      <Typography variant="caption">{label}</Typography>
-      <Typography>{value}</Typography>
+      <Typography>{label}</Typography>
+      <Typography variant="caption" style={{ whiteSpace: 'pre-wrap' }} >{value}</Typography>
     </Stack>
   )
 }

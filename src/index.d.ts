@@ -19,4 +19,5 @@ export interface ZoneHumide {
   diagnostic_hydro: string
   criteres_delim: string[]
   images: Image[]
+  communes: string[]
 }
