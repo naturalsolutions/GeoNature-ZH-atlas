@@ -17,10 +17,12 @@ const Form: FC = () => {
   const zoneHumide = feature.properties as ZoneHumide
 
   const fetchAndSetImages = async (id) => {
-    const { data } = await axios.get(
-      `${publicRuntimeConfig?.dependencies?.apiurl}/${id}/photos`
-    )
-    return setImages(data)
+    let data
+    try {
+      ({ data } = await axios.get(
+        `${publicRuntimeConfig?.dependencies?.apiurl}/${id}/photos`
+      ))
+    } finally {return setImages(data)}
   }
   const handleOnBack = () => {
     router.push('/map')
@@ -59,38 +61,42 @@ const Form: FC = () => {
               {zoneHumide.nom.toLocaleUpperCase()}
             </Typography>
             <FormItem
-              label="Bassin versant"
+              label="Bassin versant :"
               value={zoneHumide.bassin_versant[0]}
             />
-            <FormItem label="Type de zone humide" value={zoneHumide.type} />
+            <FormItem
+              label="Commune(s) :"
+              value={zoneHumide.communes.join('\n')}
+              >
+            </FormItem>
+            <FormItem label="Type de zone humide :" value={zoneHumide.type} />
+            <FormItem
+              label="Superficie (ha) :"
+              value={(zoneHumide.superficie / 10000).toFixed(2) }
+            />
             <Stack direction="row" spacing={2} justifyContent="space-between">
               <FormItem
-                label="Superficie (ha)"
-                value={zoneHumide.superficie.toFixed(2)}
+                label="Opérateur de l’inventaire :"
+                value={zoneHumide.operateur}
               />
               <FormItem
-                label="Date"
+                label="Date :"
                 value={new Date(zoneHumide.date).toLocaleDateString('fr')}
               />
             </Stack>
             <FormItem
-              label="Opérateur de l’inventaire"
-              value={zoneHumide.operateur}
-            />
-            <FormItem label="Menaces" value={zoneHumide.menaces} />
-            <Typography variant="caption">Diagnostic fonctionnel</Typography>
-            <FormItem
-              label="Biologique / Ecologique"
-              value={zoneHumide.diagnostic_bio}
+              label="Critère(s) de délimitation :"
+              value={zoneHumide.criteres_delim.join('\n')}
             />
             <FormItem
-              label="Hydrologique / Biogéochimique"
+              label="Fonctionnalité hydrologique / biogéochimique :"
               value={zoneHumide.diagnostic_hydro}
             />
             <FormItem
-              label="Critères de délimitation"
-              value={zoneHumide.criteres_delim.join('\n')}
+              label="Fonctionnalité biologique / écologique :"
+              value={zoneHumide.diagnostic_bio}
             />
+            <FormItem label="Menace :" value={zoneHumide.menaces} />
           </Stack>
         )}
       </Stack>

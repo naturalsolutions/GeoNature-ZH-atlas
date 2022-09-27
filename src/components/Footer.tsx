@@ -87,7 +87,7 @@ const Footer: FC = () => {
             </Typography>
           ))}
           <Typography variant="caption" align="center">
-            Développé par Natura Solutions
+            Développé par Natural Solutions
           </Typography>
           <Typography variant="caption" align="center">
             © 2009 - {new Date().getFullYear()}{' '}

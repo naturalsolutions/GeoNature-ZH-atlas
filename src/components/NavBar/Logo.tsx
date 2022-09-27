@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
   },
   image: {
-    height: '48px',
+    height: '64px',
   },
   title: {
     padding: 0,
