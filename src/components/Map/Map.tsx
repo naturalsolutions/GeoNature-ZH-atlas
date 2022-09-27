@@ -3,11 +3,14 @@ import { Map as MapL, GeoJSON as GeoJSONL } from 'leaflet'
 import { LayersControl, MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useRouter } from 'next/dist/client/router'
+import getConfig from 'next/config'
 import { AppContext } from '../AppContext'
 import Legend from './Legend'
-import { TYPES, TYPES_COLORS, TILE_LAYERS } from '../../constants'
+import { TYPES, TYPES_COLORS } from '../../constants'
 import { makeStyles } from '@material-ui/core'
 import Fullscreen from './Fullscreen/Fullscreen'
+
+const { publicRuntimeConfig } = getConfig()
 
 const useStyles = makeStyles({
   root: {
@@ -63,7 +66,7 @@ const Map: FC = () => {
       whenCreated={setMap}
     >
       <LayersControl position="topright">
-        {TILE_LAYERS.map((tileLayer) => (
+        {publicRuntimeConfig?.map?.layers?.map((tileLayer) => (
           <LayersControl.BaseLayer
             key={tileLayer.name}
             checked={tileLayer.checked}
@@ -72,7 +75,7 @@ const Map: FC = () => {
             <TileLayer
               attribution={tileLayer.attribution}
               url={tileLayer.url}
-              subdomains={tileLayer.subdomains}
+              subdomains={tileLayer?.subdomains ?? []}
               maxNativeZoom={tileLayer.options?.maxNativeZoom ?? 19}
             />
           </LayersControl.BaseLayer>
