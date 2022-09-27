@@ -27,8 +27,7 @@ const Images: FC<ImagesProps> = ({ images = [] }) => {
   const handleStepChange = (step) => {
     setActiveStep(step)
   }
-
-  return images ?? (
+  return images.length > 0 ? (
     <Box>
       <AutoPlaySwipeableViews
         index={activeStep}
@@ -74,7 +73,7 @@ const Images: FC<ImagesProps> = ({ images = [] }) => {
         }
       />
     </Box>
-  )
+  ): (null)
 }
 
 export default Images
