@@ -29,29 +29,3 @@ export const TYPES = {
   12: ' marais aménagés dans un but agricole',
   13: ' zones humides artificielles',
 }
-
-export const MAP_CENTER = [47.8, 2.6]
-
-export const TILE_LAYERS = [
-  {
-    checked: false,
-    url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png	',
-    name: 'OpenStreetMap',
-    attribution: '&copy OpenStreetMap',
-    subdomains: [],
-  },
-  {
-    checked: true,
-    url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
-    name: 'OpenTopoMap',
-    attribution: '© OpenTopoMap',
-    subdomains: [],
-  },
-  {
-    checked: false,
-    url: 'https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-    name: 'GoogleSatellite',
-    attribution: '© GoogleMap',
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-  },
-]

@@ -3,6 +3,25 @@ dependencies:
   pdf: http://localhost:8000/zones_humides/export_pdf
   pbf: http://localhost:8000/zones_humides/pbf/complete
 
+map:
+  layers:
+    - checked: false
+      url: https://tile.openstreetmap.org/{z}/{x}/{y}.png
+      name: OpenStreetMap
+      attribution: '&copy OpenStreetMap'
+      subdomains: []
+    - checked: true
+      url: https://a.tile.opentopomap.org/{z}/{x}/{y}.png
+      name: OpenTopoMap
+      attribution: © OpenTopoMap
+      options: {maxNativeZoom: 17}
+      subdomains: []
+    - checked: false
+      url: https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}
+      name: GoogleSatellite
+      attribution: © GoogleMap
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+
 pages:
   home:
     title: Bienvenue sur l'atlas des zones humides de Provence-Alpes-Côte d’Azur

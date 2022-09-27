@@ -17,12 +17,13 @@ const Form: FC = () => {
   const zoneHumide = feature.properties as ZoneHumide
 
   const fetchAndSetImages = async (id) => {
-    let data
-    try {
-      ({ data } = await axios.get(
-        `${publicRuntimeConfig?.dependencies?.apiurl}/${id}/photos`
-      ))
-    } finally {return setImages(data)}
+    const { data } = await axios
+      .get(`${publicRuntimeConfig?.dependencies?.apiurl}/${id}/photos`)
+      .catch(() => {
+        //TODO: do it cleaner
+        return { data: [] }
+      })
+    return setImages(data)
   }
   const handleOnBack = () => {
     router.push('/map')
