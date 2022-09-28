@@ -75,16 +75,14 @@ const Form: FC = () => {
               label="Superficie (ha) :"
               value={(zoneHumide.superficie / 10000).toFixed(2) }
             />
-            <Stack direction="row" spacing={2} justifyContent="space-between">
-              <FormItem
-                label="Opérateur de l’inventaire :"
-                value={zoneHumide.operateur}
-              />
-              <FormItem
-                label="Date :"
-                value={new Date(zoneHumide.date).toLocaleDateString('fr')}
-              />
-            </Stack>
+            <FormItem
+              label="Opérateur de l’inventaire :"
+              value={zoneHumide.operateur}
+            />
+            <FormItem
+              label="Date :"
+              value={new Date(zoneHumide.date).toLocaleDateString('fr')}
+            />
             <FormItem
               label="Critère(s) de délimitation :"
               value={zoneHumide.criteres_delim.join('\n')}
