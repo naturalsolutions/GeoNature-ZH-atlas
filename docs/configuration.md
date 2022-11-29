@@ -1,6 +1,6 @@
 ## Structure du projet
 
-La configuration se trouve dans le dossier [`./data/config.yml`](https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/blob/1-write-docs-to-install-and-config/data/config.yml){.external-link target=\_blank} et est écrite au format [YALM][yaml]{ .external-link target=\_blank}.
+La configuration se trouve dans le dossier [`./data/config.yml`](https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/blob/1-write-docs-to-install-and-config/data/config.yml){.external-link target=\_blank} et est écrite au format [YAML][yaml]{ .external-link target=\_blank}.
 
 ```bash
 .
@@ -72,6 +72,8 @@ layout:
 
 #### Footer
 
+Dans le pied de page, nous pouvons configurer :
+
 ##### Creator
 
 Texte indiquant le propriétaire ou l'administrateur du site
@@ -81,6 +83,18 @@ Texte indiquant le propriétaire ou l'administrateur du site
 layout:
   footer:
     creator: SIT zones humides
+---
+```
+
+##### hero
+
+Image en en-tête du pied de page
+
+```yaml
+---
+layout:
+  footer:
+    hero: 'hero.svg'
 ---
 ```
 
@@ -194,34 +208,98 @@ pages:
 
 ### Dépendances
 
-##### Geojson
-
-URL du module GeoNature sur les zones humides contenant le GeoJSON avec les zones humides.
+##### API URL
+URL de l'API du module GeoNature sur les zones humides permettant 
+notamment d'obtenir les photos de chaque zone humide
 
 ```yaml
 ---
 dependencies:
-  geojson: https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/raw/main/public/geonature.geojson
+  apiurl: http://localhost:8000/zones_humides/
+---
+```
+
+##### PBF
+
+URL de la route API du module GeoNature sur les zones humides renvoyant le 
+fichier [PBF][pbf]{ .external-link target=\_blank}. contenant les 
+géométries et informations des zones humides.
+
+
+```yaml
+---
+dependencies:
+  pbf: http://localhost:8000/zones_humides/pbf/complete
 ---
 ```
 
 ##### PDF
 
-URL de base du module GeoNature Zone Humides contenant le PDF à générer
+URL de la route API du module GeoNature Zone Humides renvoyant le fichier
+PDF de chaque zone humide.
 
 ```yaml
 ---
 dependencies:
-  pdf: https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/raw/main/public/pdf
+  pdf: http://localhost:8000/zones_humides/export_pdf
 ---
 ```
+
+Il est à noter que l'URL de l'API est répété pour ces dépendences, ce 
+choix a été fait afin d'être plus flexible dans la localisation des 
+données.
+
+### Configuration de la carte
+
+Il est possible de configurer les couches cartographiques disponibles aux
+utilisateurs via la configuration suivante :
+
+```yaml
+---
+map:
+  layers:
+    - checked: true
+      url: https://wxs.ign.fr/decouverte/geoportail/wmts?LAYER=ORTHOIMAGERY.ORTHOPHOTOS&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}
+      name: ORTHO
+      attribution: IGN
+    - checked: false
+      url: https://a.tile.opentopomap.org/{z}/{x}/{y}.png
+      name: OpenTopoMap
+      attribution: © OpenTopoMap
+      options: {maxNativeZoom: 17}
+      subdomains: []
+---
+```
+
+- `checked` permet de définir la couche par défaut
+- `url` l'url de la couche
+- `name` le nom affiché à l'utilisateur
+- `attribution` permet de déterminer les créateurs de la données, n'est pas
+  affiché à l'utilisateur
+- `options` permet de définir des options de couche. Notamment le `maxNativeZoom`
+  qui empêche l'affichage de tuiles "grises" car non disponibles
+- `subdomains` sous domaine du service de tuile
 
 ## Exemple complet de configuration
 
 ```yaml
 dependencies:
-  geojson: https://gitlab.com/natural-solutions/geonature/zones-humides/atlas/-/raw/main/public/geonature.geojson
-  pdf: https://www.pdf.com
+  apiurl: http://localhost:8000/zones_humides/
+  pdf: http://localhost:8000/zones_humides/export_pdf
+  pbf: http://localhost:8000/zones_humides/pbf/complete
+
+map:
+  layers:
+    - checked: true
+      url: https://wxs.ign.fr/decouverte/geoportail/wmts?LAYER=ORTHOIMAGERY.ORTHOPHOTOS&EXCEPTIONS=text/xml&FORMAT=image/jpeg&SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}
+      name: ORTHO
+      attribution: IGN
+    - checked: false
+      url: https://a.tile.opentopomap.org/{z}/{x}/{y}.png
+      name: OpenTopoMap
+      attribution: © OpenTopoMap
+      options: {maxNativeZoom: 17}
+      subdomains: []
 
 pages:
   home:
@@ -247,6 +325,7 @@ layout:
     legal:
       - Financé par l’Etat, l’Agence de l’eau Rhône Méditerranée Corse, la Région Provence-Alpes-Côte d’Azur et les Parcs naturels régionaux de Camargue, du Luberon, du Queyras, du Verdon et de la Sainte Baume.
       - Réalisé en partenariat technique avec le Parc National des Ecrins et le Conservatoire des Espaces Naturels
+    hero: 'hero.svg'
     images:
       - src: '/images/partenaires/dreal_paca.svg'
         alt: 'DREAL PACA'
@@ -262,3 +341,4 @@ layout:
 ```
 
 [yaml]: https://fr.wikipedia.org/wiki/YAML
+[pbf]: https://wiki.openstreetmap.org/wiki/PBF_Format
