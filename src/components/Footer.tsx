@@ -73,8 +73,8 @@ const Footer: FC = () => {
                         <img
                           src={image.src}
                           alt={image.alt}
-                          height="90%"
-                          width="90%"
+                          height={image.height || "90%"}
+                          width={image.width || "90%"}
                         />
                       </Grid>
                     )
