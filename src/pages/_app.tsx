@@ -1,22 +1,23 @@
 import * as React from 'react'
 import Head from 'next/head'
 import { AppProps } from 'next/app'
-import { NoSsr } from '@material-ui/core'
-import { ThemeProvider } from '@material-ui/core/styles'
-import { CacheProvider } from '@emotion/react'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import { NoSsr } from '@mui/material'
+import { ThemeProvider } from '@mui/material/styles'
+import { CacheProvider, EmotionCache } from '@emotion/react'
+import CssBaseline from '@mui/material/CssBaseline'
 import createCache from '@emotion/cache'
 import theme from '../styles/theme'
 import '../components/Map/Fullscreen/Control.FullScreen.css'
 
-export const cache = createCache({ key: 'css' })
-cache.compat = true
+const createEmotionCache = () => {
+  return createCache({ key: 'css', prepend: true })
+}
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props
 
   return (
-    <CacheProvider value={cache}>
+    <CacheProvider value={createEmotionCache()}>
       <Head>
         <title>GeoNature · Zones Humides</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />

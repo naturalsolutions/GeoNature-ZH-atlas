@@ -5,10 +5,8 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 import createEmotionServer from '@emotion/server/create-instance'
 import theme from '../styles/theme'
 
-function getCache() {
-  const cache = createCache({ key: 'css', prepend: true })
-  cache.compat = true
-  return cache
+const createEmotionCache = () => {
+  return createCache({ key: 'css', prepend: true })
 }
 
 export default class MyDocument extends Document {
@@ -58,24 +56,23 @@ MyDocument.getInitialProps = async (ctx) => {
   // 4. page.render
 
   const originalRenderPage = ctx.renderPage
+  const cache = createEmotionCache()
 
-  const cache = getCache()
   const { extractCriticalToChunks } = createEmotionServer(cache)
 
   const enhanceComponent = (Component) => {
-    const NewComponent: FC = (props) =>
-        (
-          <CacheProvider value={cache}>
-            <Component {...props} />
-          </CacheProvider>
-        )
+    const NewComponent: FC = (props) => (
+      <CacheProvider value={cache}>
+        <Component {...props} />
+      </CacheProvider>
+    )
 
-      return NewComponent
+    return NewComponent
   }
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceComponent
+      enhanceComponent,
     })
 
   const initialProps = await Document.getInitialProps(ctx)
@@ -92,9 +89,6 @@ MyDocument.getInitialProps = async (ctx) => {
   return {
     ...initialProps,
     // Styles fragment is rendered after the app and page rendering finish.
-    styles: [
-      ...Children.toArray(initialProps.styles),
-      ...emotionStyleTags,
-    ],
+    styles: [...Children.toArray(initialProps.styles), ...emotionStyleTags],
   }
 }

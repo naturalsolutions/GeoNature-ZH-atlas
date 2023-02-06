@@ -1,15 +1,11 @@
 import { FC, useContext } from 'react'
-import { Fab, makeStyles, Theme, Paper } from '@material-ui/core'
+import { Fab, makeStyles, Theme, Paper, Box } from '@mui/material'
 import NavBar from '../NavBar'
-import NavigationIcon from '@material-ui/icons/Navigation'
-import SearchIcon from '@material-ui/icons/Search'
+import NavigationIcon from '@mui/icons-material/Navigation'
+import SearchIcon from '@mui/icons-material/Search'
 import { AppContext } from '../AppContext'
 
-interface MapStyleProps {
-  hidden: boolean
-}
-
-const useStyles = makeStyles<Theme, MapStyleProps>((theme) => ({
+const styles = {
   root: {
     height: '100vh',
     display: 'flex',
@@ -20,13 +16,15 @@ const useStyles = makeStyles<Theme, MapStyleProps>((theme) => ({
     height: '100%',
     width: '100%',
     flexDirection: 'row',
-    paddingTop: 56,
+    paddingTop:  8,
     position: 'relative',
   },
   aside: {
-    width: '100%',
+    width: {
+      xs: '100%',
+      lg: 700,
+    },
     height: '100%',
-    display: (props) => (props.hidden ? 'none' : 'block'),
   },
   fab: {
     position: 'absolute',
@@ -34,7 +32,10 @@ const useStyles = makeStyles<Theme, MapStyleProps>((theme) => ({
     right: 0,
     left: 0,
     padding: '1rem',
-    display: 'flex',
+    display: {
+      xs: "flex",
+      lg: "none",
+    },
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -46,42 +47,34 @@ const useStyles = makeStyles<Theme, MapStyleProps>((theme) => ({
     height: '100%',
     width: '100%',
   },
-  [theme.breakpoints.up('md')]: {
-    container: {
-      paddingTop: 62,
-    },
-    aside: {
-      width: 700,
-    },
-    fab: {
-      display: 'none',
-    },
-  },
-}))
+}
 
 export interface LayoutMapProps {
   sidebar?: JSX.Element
+  children: JSX.Element
 }
 
 const LayoutMap: FC<LayoutMapProps> = ({ sidebar, children }) => {
   const { hidden, setHidden } = useContext(AppContext)
-  const classes = useStyles({ hidden })
 
   const handleShowMap = () => {
     setHidden(!hidden)
   }
 
   return (
-    <div className={classes.root}>
+    <Box sx={styles.root}>
       <NavBar />
-      <div className={classes.container}>
-        <Paper square component="aside" className={classes.aside}>
+      <Box sx={styles.container}>
+        {hidden ||
+        <Paper square component="aside" sx={styles.aside}>
           {sidebar}
-        </Paper>
-        <main className={classes.main}>{children}</main>
-        <div className={classes.fab}>
+        </Paper>}
+        <Box component={'main'} sx={styles.main}>
+          {children}
+        </Box>
+        <Box sx={styles.fab}>
           <Fab
-            className={classes.fabButton}
+            sx={styles.fabButton}
             size="small"
             variant="extended"
             onClick={handleShowMap}
@@ -93,9 +86,9 @@ const LayoutMap: FC<LayoutMapProps> = ({ sidebar, children }) => {
             )}
             {hidden ? 'Filtrer' : 'Regarder la carte'}
           </Fab>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   )
 }
 

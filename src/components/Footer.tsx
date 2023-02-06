@@ -1,18 +1,10 @@
-import {
-  Container,
-  Box,
-  makeStyles,
-  Grid,
-  Stack,
-  Typography,
-  Link,
-} from '@material-ui/core'
+import { Container, Box, Grid, Stack, Typography, Link } from '@mui/material'
 import { FC } from 'react'
 import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
 
-const useStyles = makeStyles({
+const styles = {
   root: {
     background: '#38414582',
     color: '#fff',
@@ -24,13 +16,11 @@ const useStyles = makeStyles({
   title: {
     textTransform: 'uppercase',
   },
-})
+}
 
 const Footer: FC = () => {
-  const classes = useStyles()
-
   return (
-    <Box className={classes.root}>
+    <Box sx={styles.root}>
       <Container>
         {publicRuntimeConfig?.layout?.footer?.hero && (
           <img
@@ -46,15 +36,11 @@ const Footer: FC = () => {
               justifyContent="flex-start"
               alignItems="flex-start"
             >
-              <Typography variant="h6" className={classes.title}>
+              <Typography variant="h6" sx={styles.title}>
                 A Propos
               </Typography>
               {publicRuntimeConfig?.layout?.footer?.links?.map((link) => (
-                <Link
-                  key={link.title}
-                  className={classes.link}
-                  href={link.href}
-                >
+                <Link key={link.title} sx={styles.link} href={link.href}>
                   {link.title}
                 </Link>
               ))}
@@ -62,7 +48,7 @@ const Footer: FC = () => {
           </Grid>
           <Grid item xs={12} sm={9}>
             <Stack spacing={3}>
-              <Typography className={classes.title} variant="h6">
+              <Typography sx={styles.title} variant="h6">
                 Partenaires
               </Typography>
               <Grid container>

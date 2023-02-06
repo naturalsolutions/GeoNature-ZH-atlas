@@ -9,7 +9,7 @@ import {
   Box,
   Typography,
   Theme,
-} from '@material-ui/core'
+} from '@mui/material'
 import Item from './Item'
 import { FC, useState, useContext, useEffect, useRef } from 'react'
 import { AppContext } from '../AppContext'
@@ -20,12 +20,12 @@ import InfiniteSelect from '@components/InfiniteSelect'
 
 const types = Object.values(TYPES)
 
-const useStyles = makeStyles<Theme>((theme) => ({
+const styles = {
   root: {
     width: '100%',
     height: '100%',
   },
-}))
+}
 
 export interface Filters {
   name: string
@@ -54,7 +54,6 @@ const initPaginationValues = {
 }
 
 const Search: FC = () => {
-  const classes = useStyles()
   const { results, geoJSON, filter, setFilter, setResults } =
     useContext(AppContext)
   const [values, setValues] = useState<Values>(initValues)
@@ -72,8 +71,8 @@ const Search: FC = () => {
 
   useEffect(() => {
     const newValues = initValues
-
     for (const type of Object.keys(initValues)) {
+      const all = ["communes"]
       newValues[type] = [
         ...new Set(
           geoJSON.features
@@ -82,6 +81,7 @@ const Search: FC = () => {
             .sort()
         ),
       ]
+      newValues[type].unshift(all.includes(type) ? "Toutes" : "Tous")
     }
 
     setValues(newValues)
@@ -102,19 +102,19 @@ const Search: FC = () => {
       })
     }
 
-    if (filter.bassin_versant && filter.bassin_versant !== 'all') {
+    if (filter.bassin_versant && filter.bassin_versant !== 'Tous') {
       newResults.features = newResults.features.filter((f) => {
         return f.properties.bassin_versant.includes(filter.bassin_versant)
       })
     }
 
-    if (filter.communes && filter.communes !== 'all') {
+    if (filter.communes && filter.communes !== 'Toutes') {
       newResults.features = newResults.features.filter((f) => {
         return f.properties.communes.includes(filter.communes)
       })
     }
 
-    if (filter.type && filter.type !== 'all') {
+    if (filter.type && filter.type !== 'Tous') {
       newResults.features = newResults.features.filter((f) => {
         return f.properties.type === filter.type
       })
@@ -153,7 +153,7 @@ const Search: FC = () => {
   }
 
   return (
-    <Box className={classes.root}>
+    <Box sx={styles.root}>
       <Stack
         ref={scrollParentRef}
         sx={{ width: '100%', height: '100%', overflow: 'auto', p: 2 }}
@@ -165,31 +165,28 @@ const Search: FC = () => {
           label="Chercher une ZH"
           fullWidth
         />
-        <Stack direction="row" spacing={1}>
           <InfiniteSelect
-            allText="Bassin versant"
-            allTextTitle="Tous"
-            title="Bassin(s) versant(s)"
-            value={filter.bassin_versant ?? 'all'}
-            values={values.bassin_versant}
-            onChange={(value) => {
-              if (value) {
-                return handleFilters(value, 'bassin_versant')
-              }
-            }}
-          />
+              title = "Bassin(s) versant(s)"
+              values={values.bassin_versant}
+              defaultValue="Tous"
+              value={filter.bassin_versant}
+              onChange={(value) => {
+                if (value) {
+                  return handleFilters(value, 'bassin_versant')
+                }
+              }}
+          ></InfiniteSelect>
           <InfiniteSelect
-            allText="Commune"
-            allTextTitle="Toutes"
-            title="Commune(s)"
-            value={filter.communes ?? 'all'}
-            values={values.communes}
-            onChange={(value) => {
-              if (value) {
-                return handleFilters(value, 'communes')
-              }
-            }}
-          />
+              title = "Commune(s)"
+              defaultValue="Toutes"
+              value={filter.communes}
+              values={values.communes}
+              onChange={(value) => {
+                if (value) {
+                  return handleFilters(value, 'communes')
+                }
+              }}
+          ></InfiniteSelect>
           <FormControl fullWidth>
             <InputLabel>Type(s) de zone</InputLabel>
             <Select
@@ -200,7 +197,6 @@ const Search: FC = () => {
               <MenuItem disabled value="all">
                 Type de zone
               </MenuItem>
-              <MenuItem value="all">Tous</MenuItem>
               {values.type.map((type) => (
                 <MenuItem key={type} value={type}>
                   <Stack spacing={1} direction="row">
@@ -225,8 +221,6 @@ const Search: FC = () => {
               ))}
             </Select>
           </FormControl>
-        </Stack>
-        <Stack sx={{ p: '2px' }} spacing={2}>
           <Typography>{results.features.length} zones humides</Typography>
           <InfiniteScroll
             pageStart={pagination.page}
@@ -247,7 +241,6 @@ const Search: FC = () => {
               />
             ))}
           </InfiniteScroll>
-        </Stack>
       </Stack>
     </Box>
   )

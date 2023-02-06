@@ -44,9 +44,9 @@ const initialContext: Context = {
   },
   filter: {
     nom: '',
-    type: 'all',
-    bassin_versant: 'all',
-    communes: 'all',
+    type: 'Tous',
+    bassin_versant: 'Tous',
+    communes: 'Toutes',
   },
   setResults: () => {},
   setFilter: () => {},
@@ -55,7 +55,11 @@ const initialContext: Context = {
 
 const AppContext = createContext(initialContext)
 
-const AppContextProvider: FC = ({ children }) => {
+interface AppContextProviderProps {
+  children: JSX.Element
+}
+
+const AppContextProvider: FC<AppContextProviderProps> = ({ children }) => {
   const router = useRouter()
   const [hidden, setHidden] = useState<boolean>(false)
   const [geoJSON, setGeoJSON] = useState(initialContext.geoJSON)
