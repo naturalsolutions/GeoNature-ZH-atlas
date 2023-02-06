@@ -1,4 +1,4 @@
-import { Button, Paper, Stack, Typography } from '@material-ui/core'
+import { Button, Paper, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/dist/client/router'
 import getConfig from 'next/config'
 import { FC, useContext, useEffect, useState } from 'react'
@@ -68,12 +68,11 @@ const Form: FC = () => {
             <FormItem
               label="Commune(s) :"
               value={zoneHumide.communes.join('\n')}
-              >
-            </FormItem>
+            ></FormItem>
             <FormItem label="Type de zone humide :" value={zoneHumide.type} />
             <FormItem
               label="Superficie (ha) :"
-              value={(zoneHumide.superficie / 10000).toFixed(2) }
+              value={(zoneHumide.superficie / 10000).toFixed(2)}
             />
             <FormItem
               label="Opérateur de l’inventaire :"

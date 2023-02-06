@@ -1,132 +1,155 @@
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from '@material-ui/core'
-import { FC, useRef, useState } from 'react'
-import InfiniteScroll from 'react-infinite-scroller'
+import * as React from 'react'
+import TextField from '@mui/material/TextField'
+import Autocomplete, { autocompleteClasses} from '@mui/material/Autocomplete'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import Popper from '@mui/material/Popper'
+import { useTheme, styled } from '@mui/material/styles'
+import { VariableSizeList, ListChildComponentProps} from 'react-window'
+import Typography from '@mui/material/Typography'
+
+const LISTBOX_PADDING = 8 // px
 
 interface InfiniteSelectProps {
   title: string
-  allText: string
-  allTextTitle: string
   value: string
+  defaultValue: string
   values: string[]
   onChange?(value: string): void
 }
 
-const initPaginationValues = {
-  page: -1,
-  items: [],
-  hasMore: true,
-  itemsPerPage: 20,
-}
-
-// FIXME: recreate all component from scratch
-const InfiniteSelect: FC<InfiniteSelectProps> = ({
-  allText,
-  allTextTitle,
-  title,
-  value,
-  values,
-  onChange,
-}) => {
-  const scrollRef = useRef(null)
-  const [pagination, setPagination] = useState(initPaginationValues)
-
-  const handleClick = () => {
-    setPagination(initPaginationValues)
-  }
-  const handleClose = () => {
-    setPagination({
-      ...initPaginationValues,
-      hasMore: false,
-    })
-  }
-
-  const handleLoadMore = (page) => {
-    if (!values.length) {
-      return setPagination({
-        ...initPaginationValues,
-        hasMore: false,
-      })
-    }
-
-    if (page > 0 && !pagination.hasMore) {
-      return
-    }
-
-    const nextPage = page + 1
-    const items = [
-      ...(page > 0 ? pagination.items : []),
-      ...values.slice(
-        page * pagination.itemsPerPage,
-        nextPage * pagination.itemsPerPage
-      ),
-    ]
-
-    const hasMore = items.length < values.length
-
-    setPagination({
-      ...pagination,
-      hasMore,
-      items,
-    })
+function renderRow(props: ListChildComponentProps) {
+  const { data, index, style } = props
+  const dataSet = data[index]
+  const inlineStyle = {
+    ...style,
+    top: (style.top as number) + LISTBOX_PADDING,
   }
 
   return (
-    <FormControl fullWidth>
-      <InputLabel>{title}</InputLabel>
-      <Select
-        label={title}
-        renderValue={() => <div>{value === 'all' ? allTextTitle : value}</div>}
-        value={value}
-        onOpen={handleClick}
-        onClose={handleClose}
-      >
-        <Box ref={scrollRef} sx={{ height: 250, overflowY: 'scroll' }}>
-          <InfiniteScroll
-            pageStart={pagination.page}
-            hasMore={pagination.hasMore}
-            loadMore={handleLoadMore}
-            getScrollParent={() => scrollRef.current}
-            loader={
-              <MenuItem className="loader" key={0} disabled>
-                Loading ...
-              </MenuItem>
-            }
-            useWindow={false}
-          >
-            <MenuItem disabled value="">
-              {title}
-            </MenuItem>
-            <MenuItem
-              value="all"
-              onClick={() => {
-                onChange('all')
-                handleClose()
-              }}
-            >
-              {allTextTitle}
-            </MenuItem>
-            {pagination.items.map((item) => (
-              <MenuItem
-                onClick={() => {
-                  onChange(item)
-                  handleClose()
-                }}
-                key={item}
-                value={item}
-              >
-                {item}
-              </MenuItem>
-            ))}
-          </InfiniteScroll>
-        </Box>
-      </Select>
-    </FormControl>
+    <Typography component="li" {...dataSet[0]} noWrap style={inlineStyle}>
+      {dataSet[1]}
+    </Typography>
+  )
+}
+
+const OuterElementContext = React.createContext({})
+
+const OuterElementType = React.forwardRef<HTMLDivElement>((props, ref) => {
+  const outerProps = React.useContext(OuterElementContext)
+  return <div ref={ref} {...props} {...outerProps} />
+})
+OuterElementType.displayName = "OuterElement"
+
+function useResetCache(data: any) {
+  const ref = React.useRef<VariableSizeList>(null)
+  React.useEffect(() => {
+    if (ref.current != null) {
+      ref.current.resetAfterIndex(0, true)
+    }
+  }, [data])
+  return ref
+}
+
+// Adapter for react-window
+const ListboxComponent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLElement>
+>(function ListboxComponent(props, ref) {
+  const { children, ...other } = props
+  const itemData: React.ReactChild[] = []
+  ;(children as React.ReactChild[]).forEach(
+    (item: React.ReactChild & { children?: React.ReactChild[] }) => {
+      itemData.push(item)
+      itemData.push(...(item.children || []))
+    }
+  )
+
+  const theme = useTheme()
+  const smUp = useMediaQuery(theme.breakpoints.up('sm'), {
+    noSsr: true,
+  })
+  const itemCount = itemData.length
+  const itemSize = smUp ? 36 : 48
+
+  const getChildSize = (child: React.ReactChild) => {
+    if (child.hasOwnProperty('group')) {
+      return 48
+    }
+
+    return itemSize
+  }
+
+  const getHeight = () => {
+    if (itemCount > 8) {
+      return 8 * itemSize
+    }
+    return itemData.map(getChildSize).reduce((a, b) => a + b, 0)
+  }
+
+  const gridRef = useResetCache(itemCount)
+
+  return (
+    <div ref={ref}>
+      <OuterElementContext.Provider value={other}>
+        <VariableSizeList
+          itemData={itemData}
+          height={getHeight() + 2 * LISTBOX_PADDING}
+          width="100%"
+          ref={gridRef}
+          outerElementType={OuterElementType}
+          innerElementType="ul"
+          itemSize={(index) => getChildSize(itemData[index])}
+          overscanCount={5}
+          itemCount={itemCount}
+        >
+          {renderRow}
+        </VariableSizeList>
+      </OuterElementContext.Provider>
+    </div>
+  )
+})
+
+const StyledPopper = styled(Popper)({
+  [`& .${autocompleteClasses.listbox}`]: {
+    boxSizing: 'border-box',
+    '& ul': {
+      padding: 0,
+      margin: 0,
+    },
+  },
+})
+
+
+const InfiniteSelect: React.FC<InfiniteSelectProps> = ({
+  title,
+  value,
+  defaultValue,
+  values,
+  onChange,
+}) => {
+
+  return (
+    <Autocomplete
+      multiple={false}
+      disableListWrap
+      PopperComponent={StyledPopper}
+      ListboxComponent={ListboxComponent}
+      options={values}
+      value={value}
+      defaultValue={defaultValue}
+      renderInput={(params) => <TextField {...params} label={ title } />}
+      renderOption={(props, option) => [props, option] as React.ReactNode}
+      onChange={(event, newValues) => {
+        if (newValues) {
+        onChange(newValues as string)
+      }
+      }}
+      onInputChange={(event: React.SyntheticEvent, value: string, reason: string) => {
+        if(reason == "clear") {
+          onChange(values[0])
+        }
+      }}
+    />
   )
 }
 

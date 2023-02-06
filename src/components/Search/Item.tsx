@@ -1,11 +1,4 @@
-import {
-  Chip,
-  Stack,
-  Typography,
-  Paper,
-  Box,
-  makeStyles,
-} from '@material-ui/core'
+import { Chip, Stack, Typography, Paper, Box } from '@mui/material'
 import Image from 'next/image'
 import { useRouter } from 'next/dist/client/router'
 import { FC } from 'react'
@@ -16,7 +9,7 @@ export interface ItemProps {
   value: ZoneHumide
 }
 
-const useStyles = makeStyles({
+const styles = {
   root: {
     overflow: 'hidden',
     cursor: 'pointer',
@@ -27,11 +20,10 @@ const useStyles = makeStyles({
   content: {
     padding: '4px 5px ',
   },
-})
+}
 
 const Item: FC<ItemProps> = ({ value }) => {
   const router = useRouter()
-  const classes = useStyles()
 
   const handleShowForm = () => {
     router.push({
@@ -43,7 +35,7 @@ const Item: FC<ItemProps> = ({ value }) => {
   }
 
   return (
-    <Paper className={classes.root} onClick={handleShowForm}>
+    <Paper sx={styles.root} onClick={handleShowForm}>
       <Stack direction="row" spacing={2}>
         <img
           src="/images/thumbnail_not_found.svg"
@@ -51,7 +43,7 @@ const Item: FC<ItemProps> = ({ value }) => {
           height="100%"
           alt="not-found"
         />
-        <Stack className={classes.content} spacing={1} alignItems="flex-start">
+        <Stack sx={styles.content} spacing={1} alignItems="flex-start">
           <Typography
             variant="body2"
             color="textPrimary"
@@ -62,7 +54,7 @@ const Item: FC<ItemProps> = ({ value }) => {
           <Chip
             avatar={
               <Box
-                className={classes.box}
+                sx={styles.box}
                 style={{ backgroundColor: TYPES_COLORS[value.type_code] }}
               />
             }

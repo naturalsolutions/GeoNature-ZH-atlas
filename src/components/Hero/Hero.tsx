@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { makeStyles, Typography, Box, Button, Stack } from '@material-ui/core'
+import { Typography, Box, Button, Stack } from '@mui/material'
 import { useRouter } from 'next/router'
 import getConfig from 'next/config'
 import SwipeableViews from 'react-swipeable-views'
@@ -9,15 +9,19 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
 
 const { publicRuntimeConfig } = getConfig()
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
   root: {
     width: '100%',
-    marginTop: 56,
+    marginTop: "64px",
     position: 'relative',
   },
   images: {
     width: '100%',
-    height: 280,
+    height: {
+      xs: 280,
+      md: 600,
+      lg: 800,
+    },
     overflow: 'hidden',
   },
   textContainer: {
@@ -34,33 +38,21 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   text: {
-    maxWidth: 300,
+    maxWidth: (theme) => (theme.breakpoints.up('sm') ? 600 : 300),
   },
   button: {
     borderRadius: 0,
-    margin: '-30px auto 0 auto',
-    color: theme.palette.background.default,
+    margin: {
+      xs:'-30px auto 0 auto',
+      md: '-20px auto 0 auto',
+    },
+    color: (theme) => theme.palette.background.default,
     width: 300,
     padding: '1rem 3rem',
   },
-  [theme.breakpoints.up('sm')]: {
-    root: {
-      marginTop: 48,
-    },
-    images: {
-      height: 800,
-    },
-    text: {
-      maxWidth: 600,
-    },
-    button: {
-      margin: '-20px auto 0 auto',
-    },
-  },
-}))
+}
 
 const Hero: FC = () => {
-  const classes = useStyles()
   const router = useRouter()
   const [activeStep, setActiveStep] = useState(0)
 
@@ -73,8 +65,8 @@ const Hero: FC = () => {
   }
 
   return (
-    <div className={classes.root}>
-      <div className={classes.images}>
+    <Box sx={styles.root}>
+      <Box sx={styles.images}>
         <AutoPlaySwipeableViews
           index={activeStep}
           onChangeIndex={handleStepChange}
@@ -99,17 +91,17 @@ const Hero: FC = () => {
             </div>
           ))}
         </AutoPlaySwipeableViews>
-      </div>
-      <div className={classes.textContainer}>
-        <div className={classes.text}>
+      </Box>
+      <Box sx={styles.textContainer}>
+        <Box sx={styles.text}>
           <Typography variant="h4" color="white">
             {publicRuntimeConfig.pages.home.title}
           </Typography>
-        </div>
-      </div>
+        </Box>
+      </Box>
       <Stack>
         <Button
-          className={classes.button}
+          sx={styles.button}
           variant="contained"
           size="large"
           onClick={handleGoToMap}
@@ -117,7 +109,7 @@ const Hero: FC = () => {
           Accéder à l&apos;atlas
         </Button>
       </Stack>
-    </div>
+    </Box>
   )
 }
 

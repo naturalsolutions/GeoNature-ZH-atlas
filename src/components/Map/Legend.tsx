@@ -5,12 +5,12 @@ import {
   Typography,
   makeStyles,
   Divider,
-} from '@material-ui/core'
+} from '@mui/material'
 import { FC, useState } from 'react'
-import ExpandLessIcon from '@material-ui/icons/ExpandLess'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
-const useStyles = makeStyles({
+const styles = {
   root: {
     padding: '1rem',
     position: 'absolute',
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     width: 20,
     height: 20,
   },
-})
+}
 
 export interface LegendItem {
   color: string
@@ -34,18 +34,15 @@ export interface LegendProps {
 }
 
 const Item: FC<LegendItem> = ({ color, name }) => {
-  const classes = useStyles()
-
   return (
     <Stack direction="row" spacing={2}>
-      <Box className={classes.box} sx={{ backgroundColor: color }} />
+      <Box sx={{ ...styles.box, backgroundColor: color }} />
       <Typography variant="caption">{name.toUpperCase()}</Typography>
     </Stack>
   )
 }
 
 const Legend: FC<LegendProps> = ({ items = [] }) => {
-  const classes = useStyles()
   const [open, setOpen] = useState(false)
 
   const handleToggle = () => {
@@ -53,7 +50,7 @@ const Legend: FC<LegendProps> = ({ items = [] }) => {
   }
 
   return (
-    <Paper className={classes.root} square>
+    <Paper sx={styles.root} square>
       <Stack spacing={2}>
         <Stack
           spacing={2}

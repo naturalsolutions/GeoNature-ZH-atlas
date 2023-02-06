@@ -1,49 +1,48 @@
 import { FC, useContext, useEffect, useState, useRef } from 'react'
 import { Map as MapL, GeoJSON as GeoJSONL } from 'leaflet'
-import { LayersControl, MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
+import {
+  LayersControl,
+  TileLayer,
+  GeoJSON,
+  useMap,
+} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useRouter } from 'next/dist/client/router'
 import getConfig from 'next/config'
 import { AppContext } from '../AppContext'
 import Legend from './Legend'
 import { TYPES, TYPES_COLORS } from '../../constants'
-import { makeStyles } from '@material-ui/core'
+import { makeStyles } from '@mui/material'
 import Fullscreen from './Fullscreen/Fullscreen'
 
 const { publicRuntimeConfig } = getConfig()
 
-const useStyles = makeStyles({
-  root: {
-    width: '100%',
-    height: '100%',
-  },
-})
-
 const Map: FC = () => {
   const router = useRouter()
-  const classes = useStyles()
   const { results, hidden } = useContext(AppContext)
-  const [map, setMap] = useState<MapL>()
+  const map = useMap()
   const geojsonRef = useRef<GeoJSONL>()
 
-  useEffect(() => {
+  const flyToBounds = (map, geojsonRef, results) => {
     if (map && geojsonRef && results.features.length > 0) {
       map.flyToBounds(geojsonRef.current.getBounds(), {
         animate: false,
       })
     }
+  }
+
+  useEffect(() => {
+    flyToBounds(map, geojsonRef, results)
   }, [map, results])
 
   useEffect(() => {
     if (map && hidden) {
       window.dispatchEvent(new Event('resize'))
       setTimeout(() => {
-        map.flyToBounds(geojsonRef.current.getBounds(), {
-          animate: false,
-        })
+        flyToBounds(map, geojsonRef, results)
       }, 10)
     }
-  }, [map, hidden])
+  }, [map, hidden, results])
 
   const handleOnEachFeature = (feature, layer) => {
     layer.on({
@@ -59,12 +58,7 @@ const Map: FC = () => {
   }
 
   return (
-    <MapContainer
-      className={classes.root}
-      center={[47.8, 2.6]}
-      zoom={6}
-      whenCreated={setMap}
-    >
+    <>
       <LayersControl position="topright">
         {publicRuntimeConfig?.map?.layers?.map((tileLayer) => (
           <LayersControl.BaseLayer
@@ -103,7 +97,7 @@ const Map: FC = () => {
         })}
       />
       <Fullscreen />
-    </MapContainer>
+    </>
   )
 }
 

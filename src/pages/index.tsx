@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from '@material-ui/core'
+import { Box, Container, Typography } from '@mui/material'
 import { NextPage } from 'next'
 import Hero from '../components/Hero'
 import LayoutDefault from '../components/Layout/Default'

@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
-import { Button, Box, MobileStepper } from '@material-ui/core'
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft'
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight'
+import { Button, Box, MobileStepper } from '@mui/material'
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay } from 'react-swipeable-views-utils'
 import { Image } from '../index'
@@ -73,7 +73,7 @@ const Images: FC<ImagesProps> = ({ images = [] }) => {
         }
       />
     </Box>
-  ): (null)
+  ) : null
 }
 
 export default Images

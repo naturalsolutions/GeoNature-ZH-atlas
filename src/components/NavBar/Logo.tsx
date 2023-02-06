@@ -1,11 +1,11 @@
-import { Stack, makeStyles, Typography, Link } from '@material-ui/core'
+import { Stack, Typography, Link } from '@mui/material'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
 
-const useStyles = makeStyles({
+const styles = {
   root: {
     cursor: 'pointer',
   },
@@ -22,10 +22,9 @@ const useStyles = makeStyles({
     padding: 0,
     margin: 0,
   },
-})
+}
 
 const Logo: FC = () => {
-  const classes = useStyles()
   const router = useRouter()
 
   const handleGoToHome = () => {
@@ -34,7 +33,7 @@ const Logo: FC = () => {
 
   return (
     <Stack
-      className={classes.root}
+      sx={styles.root}
       direction="row"
       justifyContent="flex-start"
       alignItems="center"
@@ -43,12 +42,12 @@ const Logo: FC = () => {
     >
       {publicRuntimeConfig?.layout?.header?.logo && (
         <img
-          className={classes.image}
+          style={styles.image}
           src={publicRuntimeConfig.layout.header.logo.src}
           alt={publicRuntimeConfig.layout.header.logo.alt}
         />
       )}
-      <Typography className={classes.subtitle} color="primary">
+      <Typography sx={styles.subtitle} color="primary">
         Zones humides
       </Typography>
     </Stack>
