@@ -12,7 +12,7 @@ build_image:
   only:
     - main
   tags:
-    - ns01
+    - NSCICDDOCKER
 
 pages:
   stage: pages
@@ -26,4 +26,4 @@ pages:
     paths:
       - public
   tags:
-    - ns01
+    - NSCICDDOCKER
